@@ -4,8 +4,8 @@ export type ToneId = "ember" | "lime" | "rose" | "ice";
 export type ServiceId = "workflow" | "leads" | "voice" | "rag";
 
 export const SITE = {
-  name: "Jay",
-  role: "AI Automation Builder",
+  name: "Jay Marin",
+  role: "AI Automation Specialist",
   email: "hello@example.com",
 };
 
@@ -18,38 +18,35 @@ export const NAV = [
 ];
 
 export const HERO = {
-  eyebrow: "AI automation builder · Placeholder availability note",
+  eyebrow: SITE.role,
   // One array item per line of the headline.
   headline: ["Systems that do", "the work while", "you don't."],
-  sub: "Placeholder subhead. One or two sentences on who you help and what changes for them once the automation is live.",
+  sub: "Integrate AI into your workflows and connect your tools — eliminate busywork and unlock AI-powered insights, so you can focus on what really matters.",
   primaryCta: { label: "See the builds", href: "#work" },
   secondaryCta: { label: "Book a call", href: "#contact" },
-  log: {
-    command: "run lead_intake --live",
-    steps: [
-      { tag: "trigger", text: "form.submitted", ms: "0.0s" },
-      { tag: "enrich", text: "company + role lookup", ms: "0.4s" },
-      { tag: "score", text: "fit 87 / 100", ms: "0.9s" },
-      { tag: "route", text: "owner assigned in CRM", ms: "1.1s" },
-      { tag: "notify", text: "sales channel pinged", ms: "1.3s" },
+  // Generic manual-vs-automated comparison; not tied to any one project.
+  compare: {
+    title: "manual vs automated",
+    caption: "per task",
+    columns: { task: "Task", manual: "Manual", automated: "Automated" },
+    rows: [
+      { task: "Read & assess", manual: "~5 min", automated: "0.4s" },
+      { task: "Decide next step", manual: "~10 min", automated: "0.3s" },
+      { task: "Take the action", manual: "~5 min", automated: "0.6s" },
+      { task: "Log & notify", manual: "~3 min", automated: "0.2s" },
     ],
-    done: "done in 1.3s",
+    total: { task: "Total / task", manual: "~23 min", automated: "~1.5s" },
+    footnote: "Runs 24/7 — nights, weekends, no breaks",
   },
 };
 
-export type ProofStat = {
-  value: number;
-  suffix: string;
-  label: string;
-  decimals?: number;
+// Quiet tools teaser under the hero. A pointer to #stack, not the full list.
+export const TEASER = {
+  label: "Built with",
+  tools: ["n8n", "Make", "VAPI", "Supabase", "GoHighLevel"],
+  cta: "See full stack",
+  href: "#stack",
 };
-
-export const PROOF: ProofStat[] = [
-  { value: 120, suffix: "+", label: "Automations live" },
-  { value: 38, suffix: "", label: "Client teams" },
-  { value: 3400, suffix: "+", label: "Hours returned / mo" },
-  { value: 1.8, suffix: "s", decimals: 1, label: "Median run time" },
-];
 
 export const ABOUT = {
   statement:
@@ -90,7 +87,7 @@ export const SERVICES: Service[] = [
   {
     id: "leads",
     tone: "lime",
-    title: "AI Lead Qualification & CRM",
+    title: "CRM & Pipeline Automation",
     blurb:
       "Placeholder: describe how inbound leads get scored, enriched and routed without a human in the loop.",
     points: [
@@ -191,7 +188,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: "cs-leads",
     category: "leads",
     tone: "lime",
-    categoryLabel: "AI Lead Qualification & CRM",
+    categoryLabel: "CRM & Pipeline Automation",
     title: "Placeholder case study title two",
     client: "Placeholder client",
     stat: { value: "3.1×", label: "qualified-lead rate" },

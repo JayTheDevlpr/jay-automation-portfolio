@@ -4,15 +4,8 @@ import { motion, type Transition } from "framer-motion";
 import { HERO } from "@/lib/content";
 import { EASE, SEQUENCE, useMotionMode } from "@/lib/motion";
 
-const LOG_TONES = [
-  "text-ember",
-  "text-ice",
-  "text-lime",
-  "text-rose",
-  "text-bone",
-] as const;
-
 export default function Hero() {
+  const compare = HERO.compare;
   const mode = useMotionMode();
   const ready = mode !== "pending";
   const reduced = mode === "reduced";
@@ -37,7 +30,7 @@ export default function Hero() {
             animate={ready ? { opacity: 1 } : undefined}
             transition={at(SEQUENCE.eyebrow, 0.5)}
           >
-            <span aria-hidden className="inline-block h-2 w-2 bg-ember" />
+            <span aria-hidden className="inline-block h-px w-8 bg-ember" />
             {HERO.eyebrow}
           </motion.p>
 
@@ -96,59 +89,109 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <div
-          className="border border-line bg-ink/70 font-mono text-[0.8rem] leading-6 lg:col-span-5"
-          aria-hidden
-        >
+        {/* Same terminal treatment as before: hairline frame, mono type, rows wiped in. */}
+        <div className="border border-line bg-ink/70 font-mono text-[0.8rem] leading-6 lg:col-span-5">
           <div className="label flex justify-between border-b border-line px-4 py-2 text-mute">
-            <span>run log</span>
-            <span>placeholder</span>
+            <span>{compare.title}</span>
+            <span>{compare.caption}</span>
           </div>
-          <div className="space-y-0.5 px-4 py-3">
-            <LogLine index={0} ready={ready} at={at}>
-              <span className="text-mute">$</span> {HERO.log.command}
-            </LogLine>
-            {HERO.log.steps.map((step, i) => (
-              <LogLine key={step.tag} index={i + 1} ready={ready} at={at}>
-                <span className="grid grid-cols-[1.6rem_4.6rem_1fr_auto] gap-x-2">
-                  <span className="text-mute">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className={LOG_TONES[i % LOG_TONES.length]}>
-                    {step.tag}
-                  </span>
-                  <span className="truncate text-bone/85">{step.text}</span>
-                  <span className="text-mute">{step.ms}</span>
+
+          <div
+            role="table"
+            aria-label="Time per task, manual versus automated"
+            className="space-y-0.5 px-4 py-3"
+          >
+            <WipeRow index={0} ready={ready} at={at} className={ROW}>
+              <span role="columnheader" className="label text-mute">
+                {compare.columns.task}
+              </span>
+              <span role="columnheader" className="label text-right text-mute">
+                {compare.columns.manual}
+              </span>
+              <span role="columnheader" className="label text-right text-mute">
+                {compare.columns.automated}
+              </span>
+            </WipeRow>
+
+            {compare.rows.map((row, i) => (
+              <WipeRow
+                key={row.task}
+                index={i + 1}
+                ready={ready}
+                at={at}
+                className={ROW}
+              >
+                <span role="cell" className="text-bone/85">
+                  {row.task}
                 </span>
-              </LogLine>
+                <span role="cell" className="text-right text-bone/60">
+                  {row.manual}
+                </span>
+                <span role="cell" className="text-right text-lime">
+                  {row.automated}
+                </span>
+              </WipeRow>
             ))}
-            <LogLine index={HERO.log.steps.length + 1} ready={ready} at={at}>
-              <span className="text-lime">✓ {HERO.log.done}</span>
-            </LogLine>
+
+            <WipeRow
+              index={compare.rows.length + 1}
+              ready={ready}
+              at={at}
+              className={`${ROW} mt-2 border-t border-dashed border-line pt-2 font-medium`}
+            >
+              <span role="cell" className="text-bone">
+                {compare.total.task}
+              </span>
+              <span role="cell" className="text-right text-ember">
+                {compare.total.manual}
+              </span>
+              <span role="cell" className="text-right text-lime">
+                {compare.total.automated}
+              </span>
+            </WipeRow>
           </div>
+
+          <WipeRow
+            index={compare.rows.length + 2}
+            ready={ready}
+            at={at}
+            className="border-t border-line px-4 py-2.5 text-bone/85"
+          >
+            <span aria-hidden className="text-lime">
+              ✓{" "}
+            </span>
+            {compare.footnote}
+          </WipeRow>
         </div>
       </div>
     </section>
   );
 }
 
-// Each log line is wiped in left-to-right, like output being printed.
-function LogLine({
+// Task | Manual | Automated column template shared by every table row.
+const ROW = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3";
+
+// Each row is wiped in left-to-right, like output being printed.
+function WipeRow({
   index,
   ready,
   at,
+  className,
   children,
 }: {
   index: number;
   ready: boolean;
   at: (delay: number, duration?: number) => Transition;
+  className?: string;
   children: React.ReactNode;
 }) {
   return (
     <motion.div
+      role="row"
+      className={className}
       initial={{ clipPath: "inset(0 100% 0 0)" }}
       animate={ready ? { clipPath: "inset(0 0% 0 0)" } : undefined}
-      transition={at(SEQUENCE.logStart + index * SEQUENCE.logStagger, 0.35)}
+      transition={at(SEQUENCE.tableStart + index * SEQUENCE.tableStagger, 0.35)}
     >
       {children}
     </motion.div>

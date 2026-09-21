@@ -1,83 +1,41 @@
-"use client";
+import { TEASER } from "@/lib/content";
 
-import { useEffect } from "react";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
-import { PROOF, type ProofStat } from "@/lib/content";
-import { EASE, SEQUENCE, useMotionMode } from "@/lib/motion";
-
+// Quiet tools teaser under the hero. The whole strip is a single link to the
+// full stack section; the page's smooth-scroll (globals.css) animates the jump
+// and is switched off for prefers-reduced-motion.
+//
+// Each tool is set as a text wordmark. To use official logos instead, swap the
+// wordmark <span> below for that brand's SVG (kept monochrome via currentColor).
 export default function ProofBar() {
-  const mode = useMotionMode();
-
   return (
-    <section
-      aria-label="Results at a glance"
-      className="border-b border-ink/20 bg-bone text-ink"
+    <a
+      href={TEASER.href}
+      className="group block border-b border-line bg-ink/60 transition-colors hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-bone"
     >
-      <dl className="mx-auto grid max-w-[88rem] grid-cols-2 lg:grid-cols-4">
-        {PROOF.map((stat, i) => (
-          <div
-            key={stat.label}
-            className="flex flex-col-reverse justify-end border-ink/20 px-5 py-6 sm:px-8 [&:nth-child(2n)]:border-l lg:border-l lg:first:border-l-0 [&:nth-child(n+3)]:border-t lg:[&:nth-child(n+3)]:border-t-0"
+      <span className="mx-auto flex max-w-[88rem] flex-wrap items-center justify-between gap-x-10 gap-y-3 px-5 py-5 sm:px-8">
+        <span className="label text-mute">{TEASER.label}</span>
+
+        <span className="flex flex-1 flex-wrap items-center gap-x-9 gap-y-2 sm:justify-center">
+          {TEASER.tools.map((tool) => (
+            <span
+              key={tool}
+              className="text-[1.15rem] font-semibold tracking-tight text-mute transition-colors group-hover:text-bone/80"
+            >
+              {tool}
+            </span>
+          ))}
+        </span>
+
+        <span className="label text-bone/70 transition-colors group-hover:text-ember">
+          {TEASER.cta}{" "}
+          <span
+            aria-hidden
+            className="inline-block transition-transform group-hover:translate-x-1"
           >
-            {/* Label comes first in the DOM (dt before dd); flex-col-reverse puts the number on top. */}
-            <dt className="label mt-3 text-ink/65">{stat.label}</dt>
-            <dd className="display text-[clamp(2.4rem,5vw,4.25rem)] tabular-nums">
-              <Counter stat={stat} index={i} mode={mode} />
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-  );
-}
-
-function format(value: number, decimals: number) {
-  // Fixed locale so server and client render identical text.
-  return value.toLocaleString("en-US", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
-}
-
-// Counts from 0 once, starting at the end of the Hero sequence. Under reduced
-// motion the final value is set immediately with no tween.
-function Counter({
-  stat,
-  index,
-  mode,
-}: {
-  stat: ProofStat;
-  index: number;
-  mode: ReturnType<typeof useMotionMode>;
-}) {
-  const decimals = stat.decimals ?? 0;
-  const value = useMotionValue(0);
-  const text = useTransform(
-    value,
-    (v) => `${format(v, decimals)}${stat.suffix}`,
-  );
-
-  useEffect(() => {
-    if (mode === "pending") return;
-    if (mode === "reduced") {
-      value.set(stat.value);
-      return;
-    }
-    const controls = animate(value, stat.value, {
-      duration: 1.7,
-      delay: SEQUENCE.counters + index * 0.12,
-      ease: EASE,
-    });
-    return () => controls.stop();
-  }, [mode, value, stat.value, index]);
-
-  return (
-    <>
-      <span className="sr-only">
-        {format(stat.value, decimals)}
-        {stat.suffix}
+            →
+          </span>
+        </span>
       </span>
-      <motion.span aria-hidden>{text}</motion.span>
-    </>
+    </a>
   );
 }

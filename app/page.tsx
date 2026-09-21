@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <SiteHeader />
       <main>
-        {/* Hero + ProofBar share the first viewport so the counters are on screen when they run. */}
+        {/* Hero + ProofBar (tools teaser) share the first viewport, so the teaser sits at the fold. */}
         <div className="flex min-h-[calc(100svh-3.5rem)] flex-col">
           <Hero />
           <ProofBar />

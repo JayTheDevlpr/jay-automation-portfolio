@@ -5,17 +5,16 @@ import { useEffect, useState } from "react";
 // Ease-out with a long tail: things settle rather than stop.
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
-// The single orchestrated entrance sequence (seconds from load).
-// Hero owns everything up to `counters`; ProofBar reads that one timestamp so
-// the numbers start counting only after the headline and run log have landed.
+// The single orchestrated entrance sequence (seconds from load), owned by Hero:
+// role label, headline resolves, subhead, then the comparison table prints
+// row by row. Nothing else on the page animates on entrance.
 export const SEQUENCE = {
   eyebrow: 0.1,
   headline: 0.35,
   headlineStagger: 0.08,
   sub: 1.3,
-  logStart: 1.5,
-  logStagger: 0.22,
-  counters: 2.9,
+  tableStart: 1.5,
+  tableStagger: 0.2,
 } as const;
 
 export type MotionMode = "pending" | "full" | "reduced";

@@ -6,7 +6,7 @@ export default function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-[88rem] items-center justify-between gap-6 px-5 sm:px-8">
         <a href="#" className="label flex items-center gap-2.5 text-bone">
           <span aria-hidden className="inline-block h-2.5 w-2.5 bg-ember" />
-          {SITE.name} / {SITE.role}
+          {SITE.name}
         </a>
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="label flex gap-7 text-mute">

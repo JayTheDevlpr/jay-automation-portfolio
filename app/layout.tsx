@@ -18,9 +18,9 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jay — AI Automation Builder",
+  title: "Jay Marin — AI Automation Specialist",
   description:
-    "Placeholder description: workflow automation, AI lead qualification, voice agents and RAG knowledge agents.",
+    "Integrate AI into your workflows and connect your tools: workflow automation, CRM & pipeline automation, voice agents and RAG knowledge agents.",
 };
 
 export default function RootLayout({
