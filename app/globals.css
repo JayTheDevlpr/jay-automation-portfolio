@@ -3,25 +3,94 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Ground: deep green-slate, not neutral black. */
+  --ink: 13 20 17;
+  --bog: 21 31 27;
+  --moss: 30 43 37;
+  --line: 52 68 60;
+  --bone: 235 227 208;
+  --mute: 154 167 159;
+
+  /* One colour per service category. They carry from the Services tiles
+     into the matching CaseStudies rows, so colour is information, not decoration. */
+  --ember: 255 106 43; /* workflow automation */
+  --lime: 198 227 90; /* lead qualification & CRM */
+  --rose: 242 156 192; /* voice agents */
+  --ice: 142 207 224; /* RAG / knowledge agents */
+
+  --tone: var(--ember);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  background: rgb(var(--ink));
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(var(--bog));
+  color: rgb(var(--bone));
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+::selection {
+  background: rgb(var(--ember));
+  color: rgb(var(--ink));
+}
+
+section[id] {
+  scroll-margin-top: 3.5rem;
+}
+
+@layer components {
+  /* Display type: Bricolage Grotesque pushed to its narrow, heavy end. */
+  .display {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-variation-settings: "wdth" 78;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 0.92;
+  }
+
+  .label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  /* Blueprint dot grid used behind the hero only. */
+  .dot-grid {
+    background-image: radial-gradient(
+      rgb(var(--line) / 0.7) 1px,
+      transparent 1px
+    );
+    background-size: 26px 26px;
+  }
+
+  /* Empty-image placeholder: diagonal hatch. */
+  .hatch {
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgb(var(--line) / 0.55) 0 1px,
+      transparent 1px 10px
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
