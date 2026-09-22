@@ -31,6 +31,16 @@ const config: Config = {
       letterSpacing: {
         label: "0.14em",
       },
+      keyframes: {
+        // Slides one full group (half the track) so the loop has no seam.
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        marquee: "marquee 38s linear infinite",
+      },
     },
   },
   plugins: [],

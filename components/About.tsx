@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ABOUT } from "@/lib/content";
 import SectionHeading from "./SectionHeading";
 
@@ -12,16 +13,16 @@ export default function About() {
         />
 
         <div className="grid gap-12 lg:grid-cols-12">
-          {/* Portrait placeholder */}
           <div className="lg:col-span-4">
-            <div
-              className="hatch relative aspect-[4/5] border border-line"
-              role="img"
-              aria-label="Portrait placeholder"
-            >
-              <span className="label absolute bottom-3 left-3 bg-bog px-2 py-1 text-mute">
-                Fig. 01 — portrait
-              </span>
+            <div className="relative aspect-[4/5] border border-line">
+              <Image
+                src={ABOUT.portrait}
+                alt="Portrait of Jay Marin"
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover"
+                priority
+              />
             </div>
           </div>
 

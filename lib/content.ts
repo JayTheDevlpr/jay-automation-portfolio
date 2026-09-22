@@ -49,17 +49,19 @@ export const TEASER = {
 };
 
 export const ABOUT = {
+  portrait: "/professional-pic.png",
   statement:
-    "Placeholder statement about how you think about automation, in a sentence or two.",
+    "Building the quiet systems that keep working after everyone's gone home.",
   paragraphs: [
-    "Placeholder paragraph one. Where you came from, what you got tired of doing by hand, and how that turned into building systems for other people.",
-    "Placeholder paragraph two. How you work with clients, what a typical engagement looks like, and what they can expect to hand off.",
+    "Curious about where AI and automation are heading — not just today's tools, but what comes next as agents stop answering questions and start running whole workflows on their own. That shift is happening now, and it's why I build.",
+    "What matters most to me is the practical side — helping businesses actually integrate AI into how they work, not just talk about it. Turning something people do manually, every day, into a system that just runs.",
   ],
   facts: [
-    { k: "Based in", v: "Placeholder city" },
-    { k: "Building since", v: "20XX" },
-    { k: "Works with", v: "Placeholder team sizes" },
-    { k: "Currently", v: "Placeholder availability" },
+    { k: "Based in", v: "Pampanga, Philippines" },
+    {
+      k: "Currently",
+      v: "4th-year CS student — open to remote automation projects",
+    },
   ],
 };
 
