@@ -58,10 +58,7 @@ export const ABOUT = {
   ],
   facts: [
     { k: "Based in", v: "Pampanga, Philippines" },
-    {
-      k: "Currently",
-      v: "4th-year CS student — open to remote automation projects",
-    },
+    { k: "Currently", v: "4th-year CS student" },
   ],
 };
 
