@@ -60,11 +60,38 @@ const config: Config = {
           "94%": { offsetDistance: "100%", opacity: "1" },
           "100%": { offsetDistance: "100%", opacity: "0" },
         },
+        // The wipe that lights the wires. Its stops are the same node centres
+        // in user units (the track runs 190 → 1250), on the same schedule and
+        // the same easing as `travel`, so the lit edge stays pinned to the dot
+        // instead of drifting ahead of or behind it.
+        trail: {
+          "0%, 5%": { transform: "translateX(190px)" },
+          "23%, 30%": { transform: "translateX(480px)" },
+          "46%, 53%": { transform: "translateX(720px)" },
+          "69%, 76%": { transform: "translateX(960px)" },
+          "94%, 100%": { transform: "translateX(1250px)" },
+        },
+        // The wipe that lights the nodes. Same schedule, but it waits and then
+        // jumps clear of each node's right edge on arrival, so a node is only
+        // ever fully lit or fully unlit — never caught half-wiped during the
+        // pause the dot takes inside it.
+        ignite: {
+          "0%, 3%": { transform: "translateX(150px)" },
+          "4%, 22%": { transform: "translateX(226px)" },
+          "23%, 45%": { transform: "translateX(520px)" },
+          "46%, 68%": { transform: "translateX(772px)" },
+          "69%, 93%": { transform: "translateX(1002px)" },
+          "94%, 100%": { transform: "translateX(1290px)" },
+        },
       },
       animation: {
         marquee: "marquee 38s linear infinite",
         sway: "sway 6s ease-in-out infinite",
+        // All three share the 9s period, and start together on first paint, so
+        // the dot and the two wipes stay in step.
         travel: "travel 9s ease-in-out infinite",
+        trail: "trail 9s ease-in-out infinite",
+        ignite: "ignite 9s ease-out infinite",
       },
     },
   },

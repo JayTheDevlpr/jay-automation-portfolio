@@ -93,4 +93,13 @@ section[id] {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+
+  /* The About backdrop's travelling signal and the two wipes that light its
+     trail. Cutting their duration to nothing would land them on their end
+     state, leaving the whole row lit in ember; hiding them instead falls back
+     to the unlit diagram, which is what the layer is meant to be at rest.
+     Hiding a wipe empties its mask, which hides the lit layer it reveals. */
+  .workflow-motion {
+    display: none;
+  }
 }
