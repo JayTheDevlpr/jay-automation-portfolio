@@ -50,11 +50,13 @@ export const TEASER = {
 
 export const ABOUT = {
   portrait: "/professional-pic.png",
-  // Oversized ghosted repeat of the section headline, set behind the portrait
-  // purely as texture — decorative, so the component hides it from screen
-  // readers rather than announcing the headline twice.
-  paragraph:
-    "Led by curiosity — about AI, about automation, about being part of what's happening right now instead of watching it happen. That's what keeps me upskilling, and what pulled me into building these systems myself: not just tools that answer questions, but ones that run entire workflows on their own.",
+  // Printed on the hanging ID badge. Stored in title case and uppercased in
+  // CSS, so screen readers get a name rather than spelling out an acronym.
+  idName: "Jay M Marin",
+  paragraphs: [
+    "Every system I build is proof I can keep up with where this field is going — because in AI and automation, standing still means falling behind. That drive is what turned curiosity into real, working systems.",
+    "What matters most to me is the practical side — helping businesses actually integrate AI into how they work, not just talk about it. Turning something people do manually, every day, into a system that just runs, and figuring out what to do when it doesn't.",
+  ],
 };
 
 export type Service = {
