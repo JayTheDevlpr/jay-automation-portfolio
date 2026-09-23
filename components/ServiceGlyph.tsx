@@ -2,10 +2,12 @@ import type { ServiceId } from "@/lib/content";
 
 // Small schematic drawings, one per service. Static, drawn in the tile's tone.
 export default function ServiceGlyph({ id }: { id: ServiceId }) {
+  // Drawn on a 120x72 grid but rendered smaller, so the tile header stays a
+  // detail rather than a third of the card. The viewBox keeps the ratio.
   const common = {
     viewBox: "0 0 120 72",
-    width: 120,
-    height: 72,
+    width: 100,
+    height: 60,
     fill: "none",
     stroke: "currentColor",
     strokeWidth: 1.5,

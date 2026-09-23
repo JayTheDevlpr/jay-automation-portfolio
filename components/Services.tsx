@@ -27,21 +27,24 @@ export default function Services() {
             <article
               key={service.id}
               style={toneStyle(service.tone)}
-              className={`group border-t-4 border-t-[rgb(var(--tone))] p-6 transition-colors sm:p-8 ${SPANS[i]} ${
+              className={`group border-t-4 border-t-[rgb(var(--tone))] p-5 transition-colors sm:p-6 ${SPANS[i]} ${
                 i % 3 === 0
                   ? "bg-moss hover:bg-[rgb(var(--tone)/0.14)]"
                   : "border-x border-b border-line hover:bg-[rgb(var(--tone)/0.08)]"
               }`}
             >
-              <div className="flex items-start justify-between gap-6 text-[rgb(var(--tone))]">
+              <div className="flex items-start justify-between gap-4 text-[rgb(var(--tone))]">
                 <span className="label">S/0{i + 1}</span>
                 <ServiceGlyph id={service.id} />
               </div>
 
-              <h3 className="display mt-8 max-w-[14ch] text-[clamp(1.9rem,3.4vw,2.9rem)]">
+              {/* Sized to sit between the section headline and body copy, the
+                  same step down the Hero and About use, rather than competing
+                  with the headline above it. */}
+              <h3 className="display mt-6 max-w-[16ch] text-[clamp(1.6rem,2.6vw,2.25rem)]">
                 {service.title}
               </h3>
-              <p className="mt-4 max-w-[48ch] leading-relaxed text-bone/75">
+              <p className="mt-3 max-w-[48ch] text-[0.95rem] leading-[1.65] text-bone/75">
                 {service.blurb}
               </p>
             </article>
