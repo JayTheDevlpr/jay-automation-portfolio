@@ -54,7 +54,7 @@ export const ABOUT = {
   // CSS, so screen readers get a name rather than spelling out an acronym.
   idName: "Jay M Marin",
   paragraph:
-    "Every system I build is proof I can keep up with where this field is going — and when something doesn't go as planned, I'm the one who figures out why and fixes it.",
+    "A workflow builder at heart — I take what a business already runs on manually and turn it into something automated, reliable, and built to keep running long after I've moved on to the next system.",
   cta: { label: "See my case studies", href: "#work" },
 };
 
