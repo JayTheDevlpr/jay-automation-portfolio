@@ -20,7 +20,6 @@ export default function Services() {
           index="02"
           label="Services"
           title="Four things I build, end to end."
-          note="Placeholder note"
         />
 
         <div className="grid gap-4 lg:grid-cols-12">
@@ -45,17 +44,6 @@ export default function Services() {
               <p className="mt-4 max-w-[48ch] leading-relaxed text-bone/75">
                 {service.blurb}
               </p>
-
-              <ul className="mt-6 space-y-1.5 font-mono text-sm text-bone/85">
-                {service.points.map((point) => (
-                  <li key={point} className="flex gap-3">
-                    <span aria-hidden className="text-[rgb(var(--tone))]">
-                      →
-                    </span>
-                    {point}
-                  </li>
-                ))}
-              </ul>
             </article>
           ))}
         </div>

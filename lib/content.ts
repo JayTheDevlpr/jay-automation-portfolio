@@ -63,7 +63,6 @@ export type Service = {
   tone: ToneId;
   title: string;
   blurb: string;
-  points: string[];
 };
 
 export const SERVICES: Service[] = [
@@ -72,48 +71,28 @@ export const SERVICES: Service[] = [
     tone: "ember",
     title: "Workflow Automation",
     blurb:
-      "Placeholder: describe the repetitive processes you replace with reliable, observable workflows.",
-    points: [
-      "Placeholder deliverable one",
-      "Placeholder deliverable two",
-      "Placeholder deliverable three",
-    ],
+      "Building systems that take a manual, repetitive process and turn it into something that runs on its own, reliably, without needing to be watched.",
   },
   {
     id: "leads",
     tone: "lime",
     title: "CRM & Pipeline Automation",
     blurb:
-      "Placeholder: describe how inbound leads get scored, enriched and routed without a human in the loop.",
-    points: [
-      "Placeholder deliverable one",
-      "Placeholder deliverable two",
-      "Placeholder deliverable three",
-    ],
+      "Wiring CRM and pipeline logic so records move, get scored, and get routed automatically — no manual data entry.",
   },
   {
     id: "voice",
     tone: "rose",
     title: "Voice AI Agents (VAPI)",
     blurb:
-      "Placeholder: describe the inbound and outbound call agents you build and what they can handle.",
-    points: [
-      "Placeholder deliverable one",
-      "Placeholder deliverable two",
-      "Placeholder deliverable three",
-    ],
+      "Building voice agents that handle real inbound/outbound calls — qualifying, checking availability, and booking, without a human on the line.",
   },
   {
     id: "rag",
     tone: "ice",
     title: "RAG / AI Knowledge Agents",
     blurb:
-      "Placeholder: describe the assistants that answer from a company's own documents and data.",
-    points: [
-      "Placeholder deliverable one",
-      "Placeholder deliverable two",
-      "Placeholder deliverable three",
-    ],
+      "Building AI assistants that answer accurately from a company's own documents, with confidence checks instead of guessing.",
   },
 ];
 
