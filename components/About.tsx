@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ABOUT } from "@/lib/content";
 import SectionHeading from "./SectionHeading";
+import WorkflowBackdrop from "./WorkflowBackdrop";
 
 export default function About() {
   return (
@@ -9,7 +10,11 @@ export default function About() {
       id="about"
       className="relative overflow-hidden border-b border-line"
     >
-      <div className="mx-auto max-w-[88rem] px-5 py-16 sm:px-8 sm:py-24">
+      <WorkflowBackdrop />
+
+      {/* z-10 keeps the content above the absolutely positioned backdrop,
+          which would otherwise paint over it. */}
+      <div className="relative z-10 mx-auto max-w-[88rem] px-5 py-16 sm:px-8 sm:py-24">
         {/* Label only — the headline sits at the top of the left column. */}
         <SectionHeading index="01" label="About" />
 
