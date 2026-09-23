@@ -66,15 +66,6 @@ section[id] {
     letter-spacing: 0.14em;
   }
 
-  /* Neon-style glow for the accented line of the About backdrop. Built from
-     --ember so the halo reuses the site's accent rather than a new colour. */
-  .glow-ember {
-    color: rgb(var(--ember));
-    text-shadow:
-      0 0 30px rgb(var(--ember) / 0.6),
-      0 0 60px rgb(var(--ember) / 0.3);
-  }
-
   /* Blueprint dot grid used behind the hero only. */
   .dot-grid {
     background-image: radial-gradient(
