@@ -12,10 +12,17 @@ export default function About() {
       className="relative overflow-hidden border-b border-line"
     >
       <div className="mx-auto max-w-[88rem] px-5 py-16 sm:px-8 sm:py-24">
+        {/* Two-tone headline: the second line carries the accent, pairing it
+            with the accented pull-quote on the right of the composition. */}
         <SectionHeading
           index="01"
           label="About"
-          title="The person behind the pipelines."
+          title={
+            <>
+              <span className="block">The person behind</span>
+              <span className="block text-ice">the pipelines.</span>
+            </>
+          }
         />
 
         <div className="relative">
@@ -25,7 +32,7 @@ export default function About() {
               the lines run off both edges) centred on the portrait and toned
               down to near-background so it reads as texture. Below lg it stays
               a legible line above the stack rather than vanishing. */}
-          <p className="display mb-10 text-[1.55rem] leading-[1.05] tracking-[-0.03em] text-bone/70 lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-1/2 lg:z-0 lg:mb-0 lg:w-[130vw] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2 lg:text-center lg:text-[clamp(4rem,12vw,9rem)] lg:leading-[0.82] lg:tracking-[-0.035em] lg:text-line/60">
+          <p className="display mb-10 text-[1.55rem] leading-[1.05] tracking-[-0.03em] text-bone/70 lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-1/2 lg:z-0 lg:mb-0 lg:w-[130vw] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2 lg:text-center lg:text-[clamp(4rem,12vw,9rem)] lg:uppercase lg:leading-[0.82] lg:tracking-[-0.035em] lg:text-moss">
             {ABOUT.statement}
           </p>
 
@@ -52,13 +59,16 @@ export default function About() {
               </div>
             </div>
 
-            {/* Deliberate body setting: measured line length, 1.7 leading and a
-                touch of negative tracking rather than default sans metrics. */}
-            <p className="max-w-[33ch] text-[1rem] leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:col-start-1 lg:row-start-1 lg:justify-self-start lg:text-[1.0625rem]">
+            {/* Left: plain body copy — regular weight, soft off-white, a
+                measured line length and standard body leading. */}
+            <p className="max-w-[33ch] text-[1rem] font-normal leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:col-start-1 lg:row-start-1 lg:justify-self-start lg:text-[1.0625rem]">
               {ABOUT.paragraphs[0]}
             </p>
 
-            <p className="max-w-[33ch] text-[1rem] leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:col-start-3 lg:row-start-1 lg:justify-self-end lg:text-[1.0625rem]">
+            {/* Right: the same copy set as a pull-quote — compressed display
+                face, bold, and in the accent so it reads as a pair with the
+                headline's second line. */}
+            <p className="display max-w-[24rem] text-balance text-[clamp(1.2rem,1.55vw,1.5rem)] font-bold leading-[1.2] text-ice lg:col-start-3 lg:row-start-1 lg:justify-self-end">
               {ABOUT.paragraphs[1]}
             </p>
           </div>

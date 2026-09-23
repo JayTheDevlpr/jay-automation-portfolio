@@ -1,7 +1,10 @@
 type Props = {
   index: string;
   label: string;
-  title: string;
+  // Node rather than string so a section can colour parts of its title
+  // (About sets its second line in the accent); the other sections pass
+  // a plain string and are unaffected.
+  title: React.ReactNode;
   note?: string;
   tone?: "light" | "dark";
 };
