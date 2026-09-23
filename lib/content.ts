@@ -53,10 +53,9 @@ export const ABOUT = {
   // Printed on the hanging ID badge. Stored in title case and uppercased in
   // CSS, so screen readers get a name rather than spelling out an acronym.
   idName: "Jay M Marin",
-  paragraphs: [
-    "Every system I build is proof I can keep up with where this field is going — because in AI and automation, standing still means falling behind. That drive is what turned curiosity into real, working systems.",
-    "What matters most to me is the practical side — helping businesses actually integrate AI into how they work, not just talk about it. Turning something people do manually, every day, into a system that just runs, and figuring out what to do when it doesn't.",
-  ],
+  paragraph:
+    "Every system I build is proof I can keep up with where this field is going — and when something doesn't go as planned, I'm the one who figures out why and fixes it.",
+  cta: { label: "See my case studies", href: "#work" },
 };
 
 export type Service = {

@@ -14,18 +14,26 @@ export default function About() {
         <SectionHeading index="01" label="About" />
 
         <div className="grid gap-16 lg:grid-cols-2 lg:items-start lg:gap-12">
-          {/* Left: headline, then the paragraphs beneath it. */}
-          <div className="lg:pl-6">
+          {/* Left: headline, paragraph, then the CTA. */}
+          <div className="lg:pl-16">
             <h2 className="display text-[clamp(2.75rem,6vw,5rem)]">
               <span className="block">The person behind</span>
               <span className="block text-ember">the workflow.</span>
             </h2>
 
-            <div className="mt-8 max-w-[42ch] space-y-5 text-[1rem] font-normal leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:text-[1.0625rem]">
-              {ABOUT.paragraphs.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
+            <p className="mt-8 max-w-[46ch] text-[1rem] font-normal leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:text-[1.0625rem]">
+              {ABOUT.paragraph}
+            </p>
+
+            {/* Same treatment as the Hero's primary button. The page's
+                scroll-behavior handles the smooth scroll, and section
+                scroll-margin keeps the target clear of the sticky header. */}
+            <a
+              href={ABOUT.cta.href}
+              className="label mt-8 inline-block bg-bone px-5 py-3.5 text-ink transition-colors hover:bg-ember focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+            >
+              {ABOUT.cta.label} →
+            </a>
           </div>
 
           {/* Right: the portrait as an ID badge on a lanyard. self-center keeps
