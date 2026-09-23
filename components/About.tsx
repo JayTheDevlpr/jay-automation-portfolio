@@ -26,9 +26,17 @@ export default function About() {
               above it. */}
           <p
             aria-hidden
-            className="display pointer-events-none absolute left-1/2 top-0 z-0 hidden w-[130vw] max-w-none -translate-x-1/2 -translate-y-1/3 text-center text-[clamp(4rem,12vw,9rem)] uppercase leading-[0.82] tracking-[-0.035em] text-moss lg:block"
+            className="display pointer-events-none absolute left-1/2 top-0 z-0 hidden w-full -translate-x-1/2 -translate-y-[16%] text-center text-[clamp(3.5rem,10vw,7.5rem)] uppercase leading-[0.82] tracking-[-0.045em] lg:block"
           >
-            {ABOUT.backdrop}
+            {/* nowrap keeps each line intact: below the widest breakpoints the
+                lines run past the container rather than breaking, and the
+                section clips the overhang. */}
+            <span className="block whitespace-nowrap text-moss">
+              {ABOUT.backdrop[0]}
+            </span>
+            <span className="glow-ember block whitespace-nowrap">
+              {ABOUT.backdrop[1]}
+            </span>
           </p>
 
           {/* Portrait centred above the text layer, the paragraph and pull-quote

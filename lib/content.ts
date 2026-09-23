@@ -53,7 +53,8 @@ export const ABOUT = {
   // Oversized ghosted repeat of the section headline, set behind the portrait
   // purely as texture — decorative, so the component hides it from screen
   // readers rather than announcing the headline twice.
-  backdrop: "The person behind the pipelines",
+  // One entry per line; the second is the accented, glowing line.
+  backdrop: ["The person behind", "The workflow"],
   paragraph:
     "Led by curiosity — about AI, about automation, about being part of what's happening right now instead of watching it happen. That's what keeps me upskilling, and what pulled me into building these systems myself: not just tools that answer questions, but ones that run entire workflows on their own.",
   pullQuote: "Less manual work. More systems that just run.",
