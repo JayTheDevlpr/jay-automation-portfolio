@@ -96,44 +96,88 @@ export const SERVICES: Service[] = [
   },
 ];
 
+// `logo` points at a vendored file in public/logos. Full-colour brand marks
+// where one exists; the rest are single-path glyphs in the brand's own colour,
+// lifted in lightness where the raw value would vanish against the dark page.
+export type Tool = { name: string; logo: string };
+
 export type ToolGroup = {
   layer: string;
   tone: ToneId | "bone";
-  tools: string[];
+  tools: Tool[];
 };
+
+const logo = (name: string, slug: string): Tool => ({
+  name,
+  logo: `/logos/${slug}.svg`,
+});
 
 // Layers that map onto a service category carry that category's colour, so a
 // dot in the Stack means the same thing it does on a Services tile. The
 // supporting layers below them aren't a service anyone buys, so they stay
 // neutral rather than borrowing a colour that already has a meaning.
 export const TOOLS: ToolGroup[] = [
-  { layer: "Orchestration", tone: "ember", tools: ["n8n", "Make"] },
-  { layer: "Voice", tone: "rose", tools: ["VAPI", "Twilio", "ElevenLabs"] },
+  {
+    layer: "Orchestration",
+    tone: "ember",
+    tools: [logo("n8n", "n8n"), logo("Make", "make")],
+  },
+  {
+    layer: "Voice",
+    tone: "rose",
+    tools: [
+      logo("VAPI", "vapi"),
+      logo("Twilio", "twilio"),
+      logo("ElevenLabs", "elevenlabs"),
+    ],
+  },
   {
     layer: "Models",
     tone: "bone",
-    tools: ["OpenAI", "ChatGPT", "Anthropic (Claude)", "DeepSeek", "Gemini"],
+    tools: [
+      logo("OpenAI", "openai"),
+      logo("ChatGPT", "chatgpt"),
+      logo("Anthropic (Claude)", "anthropic"),
+      logo("DeepSeek", "deepseek"),
+      logo("Gemini", "gemini"),
+    ],
   },
-  { layer: "Knowledge", tone: "ice", tools: ["Supabase"] },
+  {
+    layer: "Knowledge",
+    tone: "ice",
+    tools: [logo("Supabase", "supabase")],
+  },
   {
     layer: "CRM & Pipeline",
     tone: "lime",
-    tools: ["GoHighLevel", "Airtable", "HubSpot"],
+    tools: [
+      logo("GoHighLevel", "gohighlevel"),
+      logo("Airtable", "airtable"),
+      logo("HubSpot", "hubspot"),
+    ],
   },
   {
     layer: "Workspace & Comms",
     tone: "bone",
     tools: [
-      "Slack",
-      "Telegram",
-      "Gmail",
-      "Google Calendar",
-      "Google Drive",
-      "Sheets",
+      logo("Slack", "slack"),
+      logo("Telegram", "telegram"),
+      logo("Gmail", "gmail"),
+      logo("Google Calendar", "googlecalendar"),
+      logo("Google Drive", "googledrive"),
+      logo("Sheets", "googlesheets"),
     ],
   },
-  { layer: "Design", tone: "bone", tools: ["Canva"] },
-  { layer: "Dev Tools", tone: "bone", tools: ["Claude Code", "VS Code", "MCP"] },
+  { layer: "Design", tone: "bone", tools: [logo("Canva", "canva")] },
+  {
+    layer: "Dev Tools",
+    tone: "bone",
+    tools: [
+      logo("Claude Code", "claudecode"),
+      logo("VS Code", "vscode"),
+      logo("MCP", "mcp"),
+    ],
+  },
 ];
 
 export type CaseStudy = {
