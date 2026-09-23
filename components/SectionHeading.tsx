@@ -1,10 +1,8 @@
 type Props = {
   index: string;
   label: string;
-  // Node rather than string so a section can colour parts of its title
-  // (About sets its second line in the accent); the other sections pass
-  // a plain string and are unaffected. Omit it to show the numbered label
-  // on its own.
+  // Optional: About omits it and carries its own headline inside the layout
+  // below, so this renders as just the numbered label.
   title?: React.ReactNode;
   note?: string;
   tone?: "light" | "dark";
@@ -20,19 +18,15 @@ export default function SectionHeading({
 }: Props) {
   const rule = tone === "light" ? "border-line" : "border-ink/30";
   const muted = tone === "light" ? "text-mute" : "text-ink/60";
-  // Without a title the numbered label carries the heading, so the section
-  // still has one in the document outline. Tailwind's preflight drops the
-  // default h2 size, weight and margin, so it renders exactly like the span.
-  const LabelTag = title ? "span" : "h2";
 
   return (
     <header className={`mb-10 border-t pt-4 sm:mb-14 ${rule}`}>
       <div
         className={`label flex items-baseline justify-between gap-6 ${muted}`}
       >
-        <LabelTag>
+        <span>
           <span className="text-ember">{index}</span> / {label}
-        </LabelTag>
+        </span>
         {note ? <span className="hidden sm:block">{note}</span> : null}
       </div>
       {title ? (

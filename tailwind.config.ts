@@ -37,9 +37,17 @@ const config: Config = {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
         },
+        // Pendulum swing for the hanging ID card. Paired with origin-top so it
+        // pivots from the anchor rather than its own centre. Rests at 0deg, so
+        // the reduced-motion rule in globals.css leaves the card hanging straight.
+        sway: {
+          "0%, 100%": { transform: "rotate(-2.5deg)" },
+          "50%": { transform: "rotate(2.5deg)" },
+        },
       },
       animation: {
         marquee: "marquee 38s linear infinite",
+        sway: "sway 6s ease-in-out infinite",
       },
     },
   },
