@@ -133,7 +133,7 @@ export const TOOLS: ToolGroup[] = [
     ],
   },
   { layer: "Design", tone: "bone", tools: ["Canva"] },
-  { layer: "Dev Tools", tone: "bone", tools: ["Claude Code", "VS Code"] },
+  { layer: "Dev Tools", tone: "bone", tools: ["Claude Code", "VS Code", "MCP"] },
 ];
 
 export type CaseStudy = {
