@@ -50,12 +50,13 @@ export const TEASER = {
 
 export const ABOUT = {
   portrait: "/professional-pic.png",
-  statement:
-    "Building the quiet systems that keep working after everyone's gone home.",
-  paragraphs: [
+  // Oversized ghosted repeat of the section headline, set behind the portrait
+  // purely as texture — decorative, so the component hides it from screen
+  // readers rather than announcing the headline twice.
+  backdrop: "The person behind the pipelines",
+  paragraph:
     "Led by curiosity — about AI, about automation, about being part of what's happening right now instead of watching it happen. That's what keeps me upskilling, and what pulled me into building these systems myself: not just tools that answer questions, but ones that run entire workflows on their own.",
-    "What matters most to me is the practical side — helping businesses actually integrate AI into how they work, not just talk about it. Turning something people do manually, every day, into a system that just runs, and figuring out what to do when it doesn't.",
-  ],
+  pullQuote: "Less manual work. More systems that just run.",
 };
 
 export type Service = {
