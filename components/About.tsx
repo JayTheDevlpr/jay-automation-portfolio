@@ -4,7 +4,13 @@ import SectionHeading from "./SectionHeading";
 
 export default function About() {
   return (
-    <section id="about" className="border-b border-line">
+    // overflow-hidden clips the full-bleed statement layer below, which is
+    // deliberately wider than the viewport — without it the page would gain a
+    // horizontal scrollbar.
+    <section
+      id="about"
+      className="relative overflow-hidden border-b border-line"
+    >
       <div className="mx-auto max-w-[88rem] px-5 py-16 sm:px-8 sm:py-24">
         <SectionHeading
           index="01"
@@ -13,41 +19,46 @@ export default function About() {
         />
 
         <div className="relative">
-          {/* The statement. On lg it becomes the oversized, very low-contrast
-              texture sitting behind the portrait; below that it stays a plain
-              readable line above the stack, so small screens don't lose the
-              content entirely. Real text either way, never aria-hidden. */}
-          <p className="display mb-10 text-[1.6rem] leading-tight text-bone/70 lg:pointer-events-none lg:absolute lg:inset-0 lg:mb-0 lg:flex lg:items-center lg:justify-center lg:text-center lg:text-[clamp(2rem,6.5vw,5rem)] lg:leading-[0.92] lg:text-bone/[0.07]">
-            <span className="lg:max-w-[22rem] xl:max-w-[32rem]">
-              {ABOUT.statement}
-            </span>
+          {/* The statement as display type: heavy (800 via .display), tight
+              negative tracking and sub-1 leading so it reads as a dense block.
+              On lg it becomes a full-bleed layer (wider than the viewport, so
+              the lines run off both edges) centred on the portrait and toned
+              down to near-background so it reads as texture. Below lg it stays
+              a legible line above the stack rather than vanishing. */}
+          <p className="display mb-10 text-[1.55rem] leading-[1.05] tracking-[-0.03em] text-bone/70 lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-1/2 lg:z-0 lg:mb-0 lg:w-[130vw] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2 lg:text-center lg:text-[clamp(4rem,12vw,9rem)] lg:leading-[0.82] lg:tracking-[-0.035em] lg:text-line/60">
+            {ABOUT.statement}
           </p>
 
-          {/* Portrait centred, paragraphs flanking it and vertically centred
-              against it. Explicit column/row placement on lg keeps the source
-              order (portrait first) that the stacked mobile layout wants. */}
-          <div className="relative grid items-center gap-y-12 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-12 xl:gap-x-16">
+          {/* Portrait centred above the text layer, paragraphs flanking it and
+              vertically centred against it. Explicit column/row placement on
+              lg keeps the source order the stacked mobile layout wants. */}
+          <div className="relative z-10 grid items-center gap-y-12 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-12 xl:gap-x-16">
             <div className="justify-self-center lg:col-start-2 lg:row-start-1">
-              <Image
-                src={ABOUT.portrait}
-                alt="Portrait of Jay Marin"
-                width={373}
-                height={549}
-                priority
-                // Colour treatment lives in the filter chain, not an overlay:
-                // an overlay rectangle would tint the cutout's transparent
-                // area too, showing as a visible box.
-                className="h-auto w-[15rem] saturate-[0.8] contrast-[1.05] brightness-95 drop-shadow-[0_24px_45px_rgba(0,0,0,0.55)] sm:w-[17rem] lg:w-[20rem]"
-              />
+              <div
+                className="relative aspect-[4/5] w-[15rem] overflow-hidden border border-line/70 shadow-[0_24px_50px_rgba(0,0,0,0.45)] sm:w-[17rem] lg:w-[20rem]"
+                // Oval rather than a circle: horizontal radii at 50%, vertical
+                // pulled back to 45% so the top and bottom read a little
+                // flatter than a plain ellipse.
+                style={{ borderRadius: "50% / 45%" }}
+              >
+                <Image
+                  src={ABOUT.portrait}
+                  alt="Portrait of Jay Marin"
+                  fill
+                  sizes="(min-width: 1024px) 20rem, (min-width: 640px) 17rem, 15rem"
+                  priority
+                  className="object-cover saturate-[0.85] contrast-[1.05] brightness-95"
+                />
+              </div>
             </div>
 
-            {/* Anchored to the outer edges so the centre stays clear for the
-                portrait and the text behind it. */}
-            <p className="max-w-[34ch] leading-relaxed text-bone/75 lg:col-start-1 lg:row-start-1 lg:justify-self-start">
+            {/* Deliberate body setting: measured line length, 1.7 leading and a
+                touch of negative tracking rather than default sans metrics. */}
+            <p className="max-w-[33ch] text-[1rem] leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:col-start-1 lg:row-start-1 lg:justify-self-start lg:text-[1.0625rem]">
               {ABOUT.paragraphs[0]}
             </p>
 
-            <p className="max-w-[34ch] leading-relaxed text-bone/75 lg:col-start-3 lg:row-start-1 lg:justify-self-end">
+            <p className="max-w-[33ch] text-[1rem] leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:col-start-3 lg:row-start-1 lg:justify-self-end lg:text-[1.0625rem]">
               {ABOUT.paragraphs[1]}
             </p>
           </div>

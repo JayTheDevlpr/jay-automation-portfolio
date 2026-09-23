@@ -49,8 +49,7 @@ export const TEASER = {
 };
 
 export const ABOUT = {
-  // Background-removed cutout; /professional-pic.png is kept as the source.
-  portrait: "/professional-pic-cutout.png",
+  portrait: "/professional-pic.png",
   statement:
     "Building the quiet systems that keep working after everyone's gone home.",
   paragraphs: [
