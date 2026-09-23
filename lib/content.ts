@@ -53,12 +53,8 @@ export const ABOUT = {
   statement:
     "Building the quiet systems that keep working after everyone's gone home.",
   paragraphs: [
-    "Curious about where AI and automation are heading — not just today's tools, but what comes next as agents stop answering questions and start running whole workflows on their own. That shift is happening now, and it's why I build.",
-    "What matters most to me is the practical side — helping businesses actually integrate AI into how they work, not just talk about it. Turning something people do manually, every day, into a system that just runs.",
-  ],
-  facts: [
-    { k: "Based in", v: "Pampanga, Philippines" },
-    { k: "Currently", v: "4th-year CS student" },
+    "Led by curiosity — about AI, about automation, about being part of what's happening right now instead of watching it happen. That's what keeps me upskilling, and what pulled me into building these systems myself: not just tools that answer questions, but ones that run entire workflows on their own.",
+    "What matters most to me is the practical side — helping businesses actually integrate AI into how they work, not just talk about it. Turning something people do manually, every day, into a system that just runs, and figuring out what to do when it doesn't.",
   ],
 };
 
