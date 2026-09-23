@@ -1,56 +1,81 @@
-// Faint automation-canvas texture for the About section: outlined nodes wired
-// together with the horizontal-out / horizontal-in curves an n8n or Make
-// canvas draws. Purely decorative — no labels, no colour, and low enough
-// contrast that it never competes with the copy in front of it.
+// Faint automation-canvas texture for the About section: a single straight run
+// of varied node shapes with one signal travelling along the wire between them.
+//
+// Everything structural is drawn in the theme's own tones — `--bone` for the
+// outlines, `--ink` for the node interiors — held at 5-8% so the row stays
+// texture. The travelling pulse is the only element carrying real saturation,
+// in `--ember`, which is also the accent the section's headline uses.
 
-type Node = { x: number; y: number };
+type Shape = "circle" | "diamond" | "rect" | "hexagon";
+type Node = { x: number; shape: Shape; half: number };
 
-const NODE_W = 92;
-const NODE_H = 54;
+const ROW_Y = 320;
 
-// Two loose clusters rather than one tidy chain, so it reads as a canvas
-// caught mid-build instead of a diagram asking to be followed.
+// Shapes alternate so the row reads as distinct steps rather than a repeated
+// stamp. `half` is the horizontal radius, which is what the connector lines
+// stop short of.
 const NODES: Node[] = [
-  { x: 52, y: 150 },
-  { x: 266, y: 150 },
-  { x: 486, y: 58 },
-  { x: 486, y: 246 },
-  { x: 716, y: 152 },
-  { x: 942, y: 152 },
-  { x: 1166, y: 62 },
-  { x: 1166, y: 248 },
-  { x: 146, y: 436 },
-  { x: 388, y: 436 },
-  { x: 624, y: 488 },
-  { x: 868, y: 430 },
-  { x: 1098, y: 472 },
+  { x: 190, shape: "circle", half: 30 },
+  { x: 480, shape: "diamond", half: 34 },
+  { x: 720, shape: "rect", half: 46 },
+  { x: 960, shape: "hexagon", half: 36 },
+  { x: 1250, shape: "circle", half: 30 },
 ];
 
-const EDGES: [number, number][] = [
-  [0, 1],
-  [1, 2],
-  [1, 3],
-  [2, 4],
-  [3, 4],
-  [4, 5],
-  [5, 6],
-  [5, 7],
-  [8, 9],
-  [9, 10],
-  [10, 11],
-  [11, 12],
-];
+const RECT_H = 56;
+const HEX_H = 30;
 
-// Leaves each node horizontally and arrives horizontally, which is what gives
-// these editors their signature S-curve between offset rows.
-function edgePath(a: Node, b: Node) {
-  const x1 = a.x + NODE_W;
-  const y1 = a.y + NODE_H / 2;
-  const x2 = b.x;
-  const y2 = b.y + NODE_H / 2;
-  const bend = Math.max(44, (x2 - x1) / 2);
-  return `M${x1} ${y1} C${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`;
+function nodeShape(n: Node, key: number) {
+  const { x, half } = n;
+
+  switch (n.shape) {
+    case "circle":
+      return <circle key={key} cx={x} cy={ROW_Y} r={half} />;
+
+    case "diamond":
+      return (
+        <path
+          key={key}
+          d={`M${x} ${ROW_Y - half} L${x + half} ${ROW_Y} L${x} ${
+            ROW_Y + half
+          } L${x - half} ${ROW_Y} Z`}
+        />
+      );
+
+    case "rect":
+      return (
+        <rect
+          key={key}
+          x={x - half}
+          y={ROW_Y - RECT_H / 2}
+          width={half * 2}
+          height={RECT_H}
+          rx="12"
+          ry="12"
+        />
+      );
+
+    case "hexagon": {
+      // Flat-topped: the two points sit on the wire, so the pulse enters and
+      // leaves through a vertex.
+      const s = half / 2;
+      return (
+        <path
+          key={key}
+          d={`M${x - half} ${ROW_Y} L${x - s} ${ROW_Y - HEX_H} L${x + s} ${
+            ROW_Y - HEX_H
+          } L${x + half} ${ROW_Y} L${x + s} ${ROW_Y + HEX_H} L${x - s} ${
+            ROW_Y + HEX_H
+          } Z`}
+        />
+      );
+    }
+  }
 }
+
+// The pulse rides this path, which spans centre to centre so the dot arrives
+// inside each node rather than stopping at its edge.
+const TRACK = `M${NODES[0].x} ${ROW_Y} H${NODES[NODES.length - 1].x}`;
 
 export default function WorkflowBackdrop() {
   return (
@@ -59,29 +84,52 @@ export default function WorkflowBackdrop() {
       viewBox="0 0 1440 640"
       preserveAspectRatio="xMidYMid meet"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      className="pointer-events-none absolute inset-0 z-0 h-full w-full text-bone opacity-[0.07]"
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full"
     >
-      {EDGES.map(([i, j]) => (
-        <path key={`${i}-${j}`} d={edgePath(NODES[i], NODES[j])} />
-      ))}
+      <defs>
+        <filter id="workflow-pulse-glow" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation="7" />
+        </filter>
+      </defs>
 
-      {NODES.map((n, i) => (
-        <g key={i}>
-          <rect
-            x={n.x}
-            y={n.y}
-            width={NODE_W}
-            height={NODE_H}
-            rx="10"
-            ry="10"
-          />
-          {/* Connection ports, as on an automation canvas. */}
-          <circle cx={n.x} cy={n.y + NODE_H / 2} r="3.5" />
-          <circle cx={n.x + NODE_W} cy={n.y + NODE_H / 2} r="3.5" />
-        </g>
-      ))}
+      {/* Wires: drawn edge to edge so each node keeps a clean break in the run. */}
+      <g stroke="rgb(var(--bone) / 0.08)" strokeWidth="2" strokeLinecap="round">
+        {NODES.slice(0, -1).map((a, i) => {
+          const b = NODES[i + 1];
+          return (
+            <line
+              key={i}
+              x1={a.x + a.half}
+              y1={ROW_Y}
+              x2={b.x - b.half}
+              y2={ROW_Y}
+            />
+          );
+        })}
+      </g>
+
+      {/* Nodes: cream outline over a fill in the page's own dark tone, both
+          low enough that the row never competes with the copy in front. */}
+      <g
+        fill="rgb(var(--ink) / 0.55)"
+        stroke="rgb(var(--bone) / 0.1)"
+        strokeWidth="2"
+      >
+        {NODES.map(nodeShape)}
+      </g>
+
+      {/* The one saturated element: a single signal looping node to node. */}
+      <g
+        className="animate-travel"
+        style={{ offsetPath: `path("${TRACK}")`, offsetRotate: "0deg" }}
+      >
+        <circle
+          r="9"
+          fill="rgb(var(--ember) / 0.35)"
+          filter="url(#workflow-pulse-glow)"
+        />
+        <circle r="4" fill="rgb(var(--ember) / 0.75)" />
+      </g>
     </svg>
   );
 }

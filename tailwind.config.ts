@@ -44,10 +44,27 @@ const config: Config = {
           "0%, 100%": { transform: "rotate(-2.5deg)" },
           "50%": { transform: "rotate(2.5deg)" },
         },
+        // Signal running along the About backdrop's wire. The stops are the
+        // node centres as a percentage of the track, each held briefly so the
+        // dot reads as arriving at a node rather than sliding past it. Fades
+        // in on the first node and out on the last, so the loop has no jump.
+        travel: {
+          "0%": { offsetDistance: "0%", opacity: "0" },
+          "5%": { offsetDistance: "0%", opacity: "1" },
+          "23%": { offsetDistance: "27.4%" },
+          "30%": { offsetDistance: "27.4%" },
+          "46%": { offsetDistance: "50%" },
+          "53%": { offsetDistance: "50%" },
+          "69%": { offsetDistance: "72.6%" },
+          "76%": { offsetDistance: "72.6%" },
+          "94%": { offsetDistance: "100%", opacity: "1" },
+          "100%": { offsetDistance: "100%", opacity: "0" },
+        },
       },
       animation: {
         marquee: "marquee 38s linear infinite",
         sway: "sway 6s ease-in-out infinite",
+        travel: "travel 9s ease-in-out infinite",
       },
     },
   },
