@@ -50,6 +50,9 @@ export const TEASER = {
 
 export const ABOUT = {
   portrait: "/professional-pic.png",
+  // Printed on the hanging ID badge. Stored in title case and uppercased in
+  // CSS, so screen readers get a normal word rather than an acronym.
+  idName: "Jay M Marin",
   // Oversized ghosted repeat of the section headline, set behind the portrait
   // purely as texture — decorative, so the component hides it from screen
   // readers rather than announcing the headline twice.

@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { ABOUT } from "@/lib/content";
+import { ABOUT, SITE } from "@/lib/content";
 import SectionHeading from "./SectionHeading";
 
 export default function About() {
   return (
-    // overflow-hidden keeps the swaying card from ever widening the page.
+    // overflow-hidden keeps the swaying badge from ever widening the page.
     <section
       id="about"
       className="relative overflow-hidden border-b border-line"
@@ -26,47 +26,66 @@ export default function About() {
             </p>
           </div>
 
-          {/* Right: the portrait as an ID badge hanging from a lanyard. */}
+          {/* Right: the portrait as an ID badge on a lanyard. */}
           <div className="flex justify-center lg:justify-end lg:pr-6">
             <div className="flex flex-col items-center">
-              {/* Anchor the strap hangs from — decorative. */}
+              {/* The rail the lanyard hangs from. Stays put while the badge
+                  below it swings. Decorative. */}
               <span
                 aria-hidden
-                className="h-3 w-3 rounded-full border-2 border-line bg-bog"
+                className="h-[6px] w-28 rounded-full bg-line shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
               />
 
-              {/* Lanyard + card swing together, pivoting at the anchor. */}
+              {/* Lanyard + card swing together, pivoting at the rail. */}
               <div className="flex w-[15rem] origin-top animate-sway flex-col items-center sm:w-[17rem]">
-                {/* The lace: two strands splaying from the anchor down to the
-                    card's top corners. preserveAspectRatio lets it stretch to
-                    the card's width, and non-scaling-stroke keeps the strands
-                    an even thickness while it does. */}
+                {/* The lace: a looped ribbon bowing out from the rail and
+                    gathering into a metal clip just above the card. Scales
+                    uniformly with the card width, so nothing distorts. */}
                 <svg
                   aria-hidden
-                  viewBox="0 0 100 40"
-                  preserveAspectRatio="none"
-                  className="h-16 w-full text-mute"
+                  viewBox="0 0 272 168"
+                  className="w-full overflow-visible"
                 >
                   <path
-                    d="M50 0 L7 40"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    vectorEffect="non-scaling-stroke"
+                    d="M136 2 C 114 42 108 104 122 142"
+                    className="stroke-ember"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    fill="none"
                   />
                   <path
-                    d="M50 0 L93 40"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    vectorEffect="non-scaling-stroke"
+                    d="M136 2 C 158 42 164 104 150 142"
+                    className="stroke-ember"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  {/* Clip, with its slot, biting over the top of the card. */}
+                  <rect
+                    x="118"
+                    y="136"
+                    width="36"
+                    height="24"
+                    rx="5"
+                    className="fill-mute"
+                  />
+                  <rect
+                    x="128"
+                    y="144"
+                    width="16"
+                    height="5"
+                    rx="2.5"
+                    className="fill-ink/60"
                   />
                 </svg>
 
-                <div className="w-full rounded-2xl border border-bone/40 bg-bone p-3 shadow-[0_22px_45px_rgba(0,0,0,0.5)]">
-                  {/* Punch slot, as on a real badge — decorative. */}
+                <div className="-mt-3 w-full rounded-2xl border border-bone/40 bg-bone p-3 shadow-[0_22px_45px_rgba(0,0,0,0.5)]">
+                  {/* Punch slot the clip hooks through — decorative. */}
                   <span
                     aria-hidden
                     className="mx-auto mb-3 block h-1.5 w-12 rounded-full bg-ink/25"
                   />
+
                   <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
                     <Image
                       src={ABOUT.portrait}
@@ -77,6 +96,19 @@ export default function About() {
                       className="object-cover"
                     />
                   </div>
+
+                  <p className="display mt-3 text-[1.15rem] uppercase leading-none tracking-[-0.01em] text-ink">
+                    {ABOUT.idName}
+                  </p>
+                  <p className="label mt-1.5 text-[0.6rem] text-ink/60">
+                    {SITE.role}
+                  </p>
+
+                  {/* Barcode strip, as on a real badge — decorative. */}
+                  <span
+                    aria-hidden
+                    className="mt-3 block h-6 w-full rounded-[2px] [background-image:repeating-linear-gradient(90deg,rgb(var(--ink))_0_2px,transparent_2px_5px,rgb(var(--ink))_5px_6px,transparent_6px_10px)]"
+                  />
                 </div>
               </div>
             </div>
