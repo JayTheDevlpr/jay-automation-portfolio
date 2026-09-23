@@ -12,18 +12,8 @@ export default function About() {
       className="relative overflow-hidden border-b border-line"
     >
       <div className="mx-auto max-w-[88rem] px-5 py-16 sm:px-8 sm:py-24">
-        {/* Two-tone headline: the second line carries the ember accent, pairing
-            it with the accented pull-quote on the right of the composition. */}
-        <SectionHeading
-          index="01"
-          label="About"
-          title={
-            <>
-              <span className="block">The person behind</span>
-              <span className="block text-ember">the pipelines.</span>
-            </>
-          }
-        />
+        {/* Label only — the headline lives in the oversized backdrop below. */}
+        <SectionHeading index="01" label="About" />
 
         <div className="relative">
           {/* Oversized ghosted repeat of the headline: heavy (800 via .display),
