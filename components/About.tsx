@@ -29,7 +29,7 @@ export default function About() {
               above it. */}
           <p
             aria-hidden
-            className="display pointer-events-none absolute left-1/2 top-0 z-0 hidden w-full -translate-x-1/2 -translate-y-[20%] text-center text-[clamp(3.5rem,10vw,7.5rem)] uppercase leading-[0.82] tracking-[-0.045em] lg:block"
+            className="display pointer-events-none absolute left-1/2 top-0 z-0 hidden w-full -translate-x-1/2 -translate-y-[20%] text-center text-[clamp(3.5rem,10vw,7.25rem)] uppercase leading-[0.82] tracking-[0.02em] lg:block"
           >
             {/* nowrap keeps each line intact: below the widest breakpoints the
                 lines run past the container rather than breaking, and the
