@@ -102,21 +102,38 @@ export type ToolGroup = {
   tools: string[];
 };
 
-// Placeholder tool names; swap for what you actually use.
+// Layers that map onto a service category carry that category's colour, so a
+// dot in the Stack means the same thing it does on a Services tile. The
+// supporting layers below them aren't a service anyone buys, so they stay
+// neutral rather than borrowing a colour that already has a meaning.
 export const TOOLS: ToolGroup[] = [
-  { layer: "Orchestration", tone: "ember", tools: ["n8n", "Make", "Zapier"] },
+  { layer: "Orchestration", tone: "ember", tools: ["n8n", "Make"] },
   { layer: "Voice", tone: "rose", tools: ["VAPI", "Twilio", "ElevenLabs"] },
-  { layer: "Models", tone: "bone", tools: ["OpenAI", "Anthropic", "Whisper"] },
   {
-    layer: "Knowledge",
-    tone: "ice",
-    tools: ["Pinecone", "Supabase", "LlamaIndex"],
+    layer: "Models",
+    tone: "bone",
+    tools: ["OpenAI", "ChatGPT", "Anthropic (Claude)", "DeepSeek", "Gemini"],
   },
+  { layer: "Knowledge", tone: "ice", tools: ["Supabase"] },
   {
-    layer: "CRM & data",
+    layer: "CRM & Pipeline",
     tone: "lime",
-    tools: ["HubSpot", "GoHighLevel", "Airtable"],
+    tools: ["GoHighLevel", "Airtable", "HubSpot"],
   },
+  {
+    layer: "Workspace & Comms",
+    tone: "bone",
+    tools: [
+      "Slack",
+      "Telegram",
+      "Gmail",
+      "Google Calendar",
+      "Google Drive",
+      "Sheets",
+    ],
+  },
+  { layer: "Design", tone: "bone", tools: ["Canva"] },
+  { layer: "Dev Tools", tone: "bone", tools: ["Claude Code", "VS Code"] },
 ];
 
 export type CaseStudy = {

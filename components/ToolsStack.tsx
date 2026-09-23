@@ -4,6 +4,11 @@ import SectionHeading from "./SectionHeading";
 
 // A stack manifest: one ruled row per layer, tool names set as running type
 // rather than chips or logo tiles.
+
+// Counted from the list itself, so the headline number can't drift out of step
+// with the rows under it when a tool is added or dropped.
+const TOOL_COUNT = TOOLS.reduce((n, group) => n + group.tools.length, 0);
+
 export default function ToolsStack() {
   return (
     <section id="stack" className="border-b border-line bg-ink">
@@ -12,7 +17,7 @@ export default function ToolsStack() {
           index="03"
           label="Stack"
           title="What the systems run on."
-          note="Placeholder tool list"
+          note={`${TOOL_COUNT} tools, actually used.`}
         />
 
         <ol className="border-t border-line">
