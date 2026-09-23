@@ -55,7 +55,6 @@ export const ABOUT = {
   // readers rather than announcing the headline twice.
   paragraph:
     "Led by curiosity — about AI, about automation, about being part of what's happening right now instead of watching it happen. That's what keeps me upskilling, and what pulled me into building these systems myself: not just tools that answer questions, but ones that run entire workflows on their own.",
-  pullQuote: "Less manual work. More systems that just run.",
 };
 
 export type Service = {
