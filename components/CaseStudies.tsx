@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CASE_STUDIES, type CaseStudy } from "@/lib/content";
 import { EASE, useMotionMode } from "@/lib/motion";
@@ -149,22 +150,7 @@ function CaseBody({ study }: { study: CaseStudy }) {
 
         {/* Straight after Build, so the canvas is seen while the description
             of it is still in mind. */}
-        {study.shots?.length ? (
-          <ul className="space-y-4">
-            {study.shots.map((shot) => (
-              <li key={shot.src}>
-                <Image
-                  src={shot.src}
-                  alt={shot.alt}
-                  width={shot.w}
-                  height={shot.h}
-                  sizes="(min-width: 1024px) 45vw, 100vw"
-                  className="h-auto w-full border border-line"
-                />
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        {study.shots?.length ? <Shots shots={study.shots} /> : null}
 
         {/* The trade-off is read before the result it shaped. Omitted
             entirely when a study has none. */}
@@ -215,6 +201,110 @@ function CaseBody({ study }: { study: CaseStudy }) {
         </div>
       </div>
     </div>
+  );
+}
+
+type Shot = NonNullable<CaseStudy["shots"]>[number];
+
+// Thumbnails that open full screen. Hand-rolled rather than pulled from a
+// package: it is a piece of state, a portal and a keydown listener.
+function Shots({ shots }: { shots: Shot[] }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const shot = openIndex === null ? null : shots[openIndex];
+
+  const closeRef = useRef<HTMLButtonElement>(null);
+  // The thumbnail that opened the overlay, so focus can go back to it.
+  const openerRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!shot) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenIndex(null);
+    };
+    document.addEventListener("keydown", onKey);
+
+    // The page behind must not scroll under the overlay.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const opener = openerRef.current;
+    closeRef.current?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previousOverflow;
+      opener?.focus();
+    };
+  }, [shot]);
+
+  return (
+    <>
+      <ul className="flex flex-wrap gap-3">
+        {shots.map((s, i) => (
+          <li key={s.src}>
+            {/* The description lives on the button, so the thumbnail itself is
+                decorative — otherwise a screen reader reads it twice. */}
+            <button
+              type="button"
+              aria-label={`Expand screenshot: ${s.alt}`}
+              onClick={(e) => {
+                openerRef.current = e.currentTarget;
+                setOpenIndex(i);
+              }}
+              className="block w-44 border border-line transition-colors hover:border-[rgb(var(--tone))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--tone))] sm:w-52"
+            >
+              <Image
+                src={s.src}
+                alt=""
+                width={s.w}
+                height={s.h}
+                sizes="208px"
+                className="h-auto w-full"
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {/* Portalled to the body so no ancestor's overflow or stacking context
+          can clip or bury it. */}
+      {shot
+        ? createPortal(
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={shot.alt}
+              onClick={() => setOpenIndex(null)}
+              // 95% ink still leaves the page faintly legible behind it, which
+              // reads as a glitch rather than a backdrop; the blur settles it.
+              className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 p-4 backdrop-blur-md sm:p-8"
+            >
+              <button
+                ref={closeRef}
+                type="button"
+                onClick={() => setOpenIndex(null)}
+                className="label absolute right-4 top-4 border border-bone/40 px-3 py-2 text-bone transition-colors hover:bg-bone hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+              >
+                Close ✕
+              </button>
+
+              {/* Clicks on the image itself must not reach the backdrop, or
+                  the overlay would close the moment it was aimed at. */}
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                width={shot.w}
+                height={shot.h}
+                sizes="92vw"
+                onClick={(e) => e.stopPropagation()}
+                className="h-auto max-h-[88vh] w-auto max-w-[92vw] border border-line"
+              />
+            </div>,
+            document.body,
+          )
+        : null}
+    </>
   );
 }
 
