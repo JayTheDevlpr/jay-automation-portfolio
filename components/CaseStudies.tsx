@@ -131,8 +131,13 @@ function CaseBody({ study }: { study: CaseStudy }) {
           [
             ["Problem", study.problem],
             ["Build", study.build],
+            // Sits between Build and Outcome, so the trade-off is read before
+            // the result it shaped. Omitted entirely when a study has none.
+            ...(study.theCatch
+              ? ([["The catch", study.theCatch]] as [string, string][])
+              : []),
             ["Outcome", study.outcome],
-          ] as const
+          ] as [string, string][]
         ).map(([heading, body]) => (
           <div key={heading}>
             <h4 className="label mb-2 text-[rgb(var(--tone))]">{heading}</h4>
@@ -143,9 +148,13 @@ function CaseBody({ study }: { study: CaseStudy }) {
 
       <div className="space-y-8 lg:col-span-5">
         <dl className="divide-y divide-line border-y border-line font-mono text-sm">
-          <div className="flex justify-between gap-6 py-3">
-            <dt className="label text-mute">Client</dt>
-            <dd className="text-right">{study.client}</dd>
+          {/* Build type runs long enough to wrap, so it stacks rather than
+              sitting opposite its label like the short metric values do. */}
+          <div className="py-3">
+            <dt className="label text-mute">Build type</dt>
+            <dd className="mt-1.5 leading-relaxed text-bone/80">
+              {study.buildType}
+            </dd>
           </div>
           {study.metrics.map((m) => (
             <div key={m.k} className="flex justify-between gap-6 py-3">

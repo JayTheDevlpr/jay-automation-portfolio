@@ -188,11 +188,16 @@ export type CaseStudy = {
   tone: ToneId;
   categoryLabel: string;
   title: string;
-  client: string;
+  // What the engagement was, rather than who it was for: a personal build and
+  // a client project shouldn't be presented as the same thing.
+  buildType: string;
   stat: { value: string; label: string };
   summary: string;
   problem: string;
   build: string;
+  // The trade-off worth owning. Optional, since not every build has one that
+  // earns its place in the write-up.
+  theCatch?: string;
   outcome: string;
   metrics: { k: string; v: string }[];
   stack: string[];
@@ -204,22 +209,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     category: "workflow",
     tone: "ember",
     categoryLabel: "Workflow Automation",
-    title: "Placeholder case study title one",
-    client: "Placeholder client",
-    stat: { value: "−62%", label: "manual processing time" },
-    summary: "One-line placeholder summary of the engagement.",
+    title: "AI Lead Triage & Response System",
+    buildType:
+      "Personal portfolio project — built and tested solo, no real client or production traffic involved.",
+    stat: { value: "4.0s", label: "form submission to full reply" },
+    summary:
+      "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",
     problem:
-      "Placeholder problem. What the client was doing by hand, how often, and what it was costing them in time or errors.",
+      "Leads that fill out a form typically wait hours — sometimes a full day — before anyone follows up. In that gap, they often go cold or move on to a competitor.",
     build:
-      "Placeholder build. The workflow you designed, the systems it connects, and any decisions worth calling out.",
+      "Make.com orchestrates the flow: a webhook catches the form submission, two OpenAI (gpt-4o-mini) calls score the lead and generate talking points, Airtable logs the record, Slack alerts the owner, and Gmail sends a personalized reply — with a live Cal.com API call pulling the real next-open slot into that reply.",
+    theCatch:
+      "Midway through, I had to decide: should the Cal.com integration auto-book the call, or just show the lead a live open time to click? Auto-booking needed a second API call (POST /bookings) plus confirmation/cancellation handling — a much bigger build. I scoped it down to read-only availability (GET /slots) instead: the lead gets a real, live time with one click to confirm, but the system doesn't commit anything on their behalf without them acting. Smaller and more honest than claiming full auto-booking.",
     outcome:
-      "Placeholder outcome. What changed after launch, in the client's own terms as much as in numbers.",
-    metrics: [
-      { k: "Timeline", v: "Placeholder" },
-      { k: "Runs / month", v: "Placeholder" },
-      { k: "Payback", v: "Placeholder" },
+      "4.0 seconds from form submission to a fully scored, logged, and replied-to lead — measured directly from the system's own response-time logging, not estimated.",
+    // No production data to report, so no metrics rather than placeholder ones.
+    metrics: [],
+    stack: [
+      "Make.com",
+      "OpenAI (GPT-4o-mini)",
+      "Airtable",
+      "Slack",
+      "Gmail",
+      "Cal.com API",
     ],
-    stack: ["Tool A", "Tool B", "Tool C"],
   },
   {
     id: "cs-leads",
@@ -227,7 +240,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "lime",
     categoryLabel: "CRM & Pipeline Automation",
     title: "Placeholder case study title two",
-    client: "Placeholder client",
+    buildType: "Placeholder build type",
     stat: { value: "3.1×", label: "qualified-lead rate" },
     summary: "One-line placeholder summary of the engagement.",
     problem:
@@ -249,7 +262,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "rose",
     categoryLabel: "Voice AI Agents (VAPI)",
     title: "Placeholder case study title three",
-    client: "Placeholder client",
+    buildType: "Placeholder build type",
     stat: { value: "24/7", label: "calls answered" },
     summary: "One-line placeholder summary of the engagement.",
     problem:
@@ -271,7 +284,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "ice",
     categoryLabel: "RAG / AI Knowledge Agents",
     title: "Placeholder case study title four",
-    client: "Placeholder client",
+    buildType: "Placeholder build type",
     stat: { value: "94%", label: "answers grounded in source" },
     summary: "One-line placeholder summary of the engagement.",
     problem:
