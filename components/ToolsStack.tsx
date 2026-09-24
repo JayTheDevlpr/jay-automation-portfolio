@@ -39,33 +39,49 @@ export default function ToolsStack() {
                 L{i + 1} · {group.layer}
               </div>
 
-              <ul className="flex flex-wrap gap-2.5">
+              <ul className="flex flex-wrap gap-x-7 gap-y-5">
                 {group.tools.map((tool) => (
                   <li key={tool.name} className="group relative">
                     {/* A button rather than a focusable span: tapping one
                         reliably moves focus on touch, which is what reveals
-                        the label on a device with no hover. */}
+                        the label on a device with no hover. Frameless — the
+                        mark sits straight on the section background, and only
+                        keyboard focus draws a ring. */}
                     <button
                       type="button"
                       aria-label={tool.name}
-                      className="peer flex h-10 w-10 items-center justify-center border border-line/60 bg-moss/40 transition-colors hover:border-[rgb(var(--tone))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--tone))]"
+                      className="peer flex h-8 items-center justify-center opacity-90 transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgb(var(--tone))]"
                     >
-                      {/* Plain img, not next/image: these are local SVGs, and
-                          next/image would need SVG serving turned on to do
-                          nothing useful for a 24px mark. */}
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={tool.logo}
-                        alt=""
-                        width={22}
-                        height={22}
-                        loading="lazy"
-                        decoding="async"
-                        // contain keeps one visual size across marks drawn on
-                        // very different aspect ratios (n8n is 1.9:1, Sheets
-                        // is 0.74:1).
-                        className="h-[22px] w-[22px] object-contain"
-                      />
+                      {tool.logo ? (
+                        <>
+                          {/* Plain img, not next/image: these are local SVGs,
+                              and next/image would need SVG serving turned on
+                              to do nothing useful for a 32px mark. */}
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={tool.logo}
+                            alt=""
+                            width={32}
+                            height={32}
+                            loading="lazy"
+                            decoding="async"
+                            // contain keeps one visual size across marks drawn
+                            // on very different aspect ratios (n8n is 1.9:1,
+                            // Sheets is 0.74:1).
+                            className="h-8 w-8 object-contain"
+                          />
+                        </>
+                      ) : (
+                        // Nothing to source a real mark from, so a lettermark
+                        // in the layer's tone, set in the same display face
+                        // the section headings use.
+                        <span
+                          aria-hidden
+                          className="display flex h-8 w-8 items-center justify-center text-[1.6rem] leading-none text-[rgb(var(--tone))]"
+                        >
+                          {tool.name.charAt(0)}
+                        </span>
+                      )}
                     </button>
 
                     {/* Revealed on hover, and on plain :focus rather than

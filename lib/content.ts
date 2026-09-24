@@ -99,7 +99,9 @@ export const SERVICES: Service[] = [
 // `logo` points at a vendored file in public/logos. Full-colour brand marks
 // where one exists; the rest are single-path glyphs in the brand's own colour,
 // lifted in lightness where the raw value would vanish against the dark page.
-export type Tool = { name: string; logo: string };
+// Left off only where no brand mark could be sourced at all, in which case the
+// Stack falls back to a lettermark in the layer's tone.
+export type Tool = { name: string; logo?: string };
 
 export type ToolGroup = {
   layer: string;
@@ -151,7 +153,8 @@ export const TOOLS: ToolGroup[] = [
     layer: "CRM & Pipeline",
     tone: "lime",
     tools: [
-      logo("GoHighLevel", "gohighlevel"),
+      // No brand mark in any public icon source, so this one is a lettermark.
+      { name: "GoHighLevel" },
       logo("Airtable", "airtable"),
       logo("HubSpot", "hubspot"),
     ],
