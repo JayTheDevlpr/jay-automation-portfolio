@@ -8,7 +8,9 @@ export default function About() {
     // overflow-hidden keeps the swaying badge from ever widening the page.
     <section
       id="about"
-      className="relative overflow-hidden border-b border-line"
+      // dot-grid is the same utility the Hero uses, so the blueprint grid
+      // carries between the two sections at identical size, colour and opacity.
+      className="dot-grid relative overflow-hidden border-b border-line"
     >
       <WorkflowBackdrop />
 
@@ -21,12 +23,12 @@ export default function About() {
         <div className="grid gap-16 lg:grid-cols-2 lg:items-start lg:gap-12">
           {/* Left: headline, paragraph, then the CTA. */}
           <div className="lg:pl-16">
-            <h2 className="display text-[clamp(2.75rem,6vw,5rem)]">
+            <h2 className="display text-[clamp(3rem,6.5vw,5.5rem)]">
               <span className="block">The person behind</span>
               <span className="block text-ember">the workflow.</span>
             </h2>
 
-            <p className="mt-8 max-w-[46ch] text-[1rem] font-normal leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:text-[1.0625rem]">
+            <p className="mt-8 max-w-[46ch] text-[1.0625rem] font-normal leading-[1.7] tracking-[-0.011em] text-pretty text-bone/70 lg:text-[1.15rem]">
               {ABOUT.paragraph}
             </p>
 
@@ -35,7 +37,7 @@ export default function About() {
                 scroll-margin keeps the target clear of the sticky header. */}
             <a
               href={ABOUT.cta.href}
-              className="label mt-8 inline-block bg-bone px-5 py-3.5 text-ink transition-colors hover:bg-ember focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+              className="label mt-8 inline-block bg-bone px-6 py-4 text-[0.78rem] text-ink transition-colors hover:bg-ember focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
             >
               {ABOUT.cta.label} →
             </a>
@@ -54,7 +56,7 @@ export default function About() {
               />
 
               {/* Strap + card swing together, pivoting at the rail. */}
-              <div className="flex w-[11rem] origin-top animate-sway flex-col items-center sm:w-[12.5rem]">
+              <div className="flex w-[12rem] origin-top animate-sway flex-col items-center sm:w-[13.75rem]">
                 {/* A plain slim cord rather than a drawn shape. */}
                 <span aria-hidden className="h-24 w-[3px] bg-ember" />
                 {/* Clip where the cord meets the card. */}
@@ -69,7 +71,7 @@ export default function About() {
                       src={ABOUT.portrait}
                       alt="Portrait of Jay Marin"
                       fill
-                      sizes="(min-width: 640px) 12.5rem, 11rem"
+                      sizes="(min-width: 640px) 13.75rem, 12rem"
                       priority
                       className="object-cover"
                     />
