@@ -188,11 +188,13 @@ export type CaseStudy = {
   tone: ToneId;
   categoryLabel: string;
   title: string;
-  // What the engagement was, rather than who it was for: a personal build and
-  // a client project shouldn't be presented as the same thing.
-  buildType: string;
   stat: { value: string; label: string };
   summary: string;
+  // A walkthrough, shown above Problem. `id` is the YouTube video id.
+  video?: { id: string; title: string };
+  // Screenshots, shown after Build. Intrinsic size is stored so the
+  // browser can reserve the space before the file loads.
+  shots?: { src: string; alt: string; w: number; h: number }[];
   problem: string;
   build: string;
   // The trade-off worth owning. Optional, since not every build has one that
@@ -210,10 +212,27 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "ember",
     categoryLabel: "Workflow Automation",
     title: "AI Lead Triage & Response System",
-    buildType: "Personal portfolio build — solo project",
     stat: { value: "4.0s", label: "form submission to full reply" },
     summary:
       "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",
+    video: {
+      id: "pRJ-z4PyHvw",
+      title: "Walkthrough: AI Lead Triage & Response System",
+    },
+    shots: [
+      {
+        src: "/images/projects/project-1/canvas-full.png",
+        alt: "The full Make.com scenario: a linear intake chain of webhook, scoring and formatting steps feeding a router that fans out into three lead tiers.",
+        w: 1282,
+        h: 585,
+      },
+      {
+        src: "/images/projects/project-1/router-hot-branch.png",
+        alt: "The router's three branches in detail, the hot-lead path running Airtable, Slack and Gmail steps with timed delays between follow-ups.",
+        w: 1269,
+        h: 574,
+      },
+    ],
     problem:
       "Leads that fill out a form typically wait hours — sometimes a full day — before anyone follows up. In that gap, they often go cold or move on to a competitor.",
     build:
@@ -221,7 +240,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     theCatch:
       "Midway through, I had to decide: should the Cal.com integration auto-book the call, or just show the lead a live open time to click? Auto-booking needed a second API call (POST /bookings) plus confirmation/cancellation handling — a much bigger build. I scoped it down to read-only availability (GET /slots) instead: the lead gets a real, live time with one click to confirm, but the system doesn't commit anything on their behalf without them acting. Smaller and more honest than claiming full auto-booking.",
     outcome:
-      "4.0 seconds from form submission to a fully scored, logged, and replied-to lead — measured directly from the system's own response-time logging, not estimated.",
+      "4.0 seconds from form submission to a fully scored, logged, and replied-to lead — measured directly from the system's own response-time logging, not estimated. Built and tested solo as a portfolio project.",
     // No production data to report, so no metrics rather than placeholder ones.
     metrics: [],
     stack: [
@@ -239,7 +258,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "lime",
     categoryLabel: "CRM & Pipeline Automation",
     title: "Placeholder case study title two",
-    buildType: "Placeholder build type",
     stat: { value: "3.1×", label: "qualified-lead rate" },
     summary: "One-line placeholder summary of the engagement.",
     problem:
@@ -261,7 +279,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "rose",
     categoryLabel: "Voice AI Agents (VAPI)",
     title: "Placeholder case study title three",
-    buildType: "Placeholder build type",
     stat: { value: "24/7", label: "calls answered" },
     summary: "One-line placeholder summary of the engagement.",
     problem:
@@ -283,7 +300,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "ice",
     categoryLabel: "RAG / AI Knowledge Agents",
     title: "Placeholder case study title four",
-    buildType: "Placeholder build type",
     stat: { value: "94%", label: "answers grounded in source" },
     summary: "One-line placeholder summary of the engagement.",
     problem:

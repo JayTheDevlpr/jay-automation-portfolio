@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CASE_STUDIES, type CaseStudy } from "@/lib/content";
@@ -128,42 +129,65 @@ function CaseBody({ study }: { study: CaseStudy }) {
     <div className="grid gap-10 border-t border-line px-5 py-8 sm:px-8 md:pl-[calc(3rem+3.5rem)] lg:grid-cols-12">
       <div className="space-y-7 lg:col-span-7">
         <p className="text-lg leading-snug text-bone/90">{study.summary}</p>
-        {(
-          [
-            ["Problem", study.problem],
-            ["Build", study.build],
-            // Sits between Build and Outcome, so the trade-off is read before
-            // the result it shaped. Omitted entirely when a study has none.
-            ...(study.theCatch
-              ? ([["The catch", study.theCatch]] as [string, string][])
-              : []),
-            ["Outcome", study.outcome],
-          ] as [string, string][]
-        ).map(([heading, body]) => (
-          <div key={heading}>
-            <h4 className="label mb-2 text-[rgb(var(--tone))]">{heading}</h4>
-            <p className="max-w-[60ch] leading-relaxed text-bone/80">{body}</p>
+
+        {/* Walkthrough first: it frames everything read below it. */}
+        {study.video ? (
+          <div className="aspect-video w-full border border-line bg-ink">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${study.video.id}`}
+              title={study.video.title}
+              loading="lazy"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="h-full w-full"
+            />
           </div>
-        ))}
+        ) : null}
+
+        <Prose heading="Problem" body={study.problem} />
+        <Prose heading="Build" body={study.build} />
+
+        {/* Straight after Build, so the canvas is seen while the description
+            of it is still in mind. */}
+        {study.shots?.length ? (
+          <ul className="space-y-4">
+            {study.shots.map((shot) => (
+              <li key={shot.src}>
+                <Image
+                  src={shot.src}
+                  alt={shot.alt}
+                  width={shot.w}
+                  height={shot.h}
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="h-auto w-full border border-line"
+                />
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {/* The trade-off is read before the result it shaped. Omitted
+            entirely when a study has none. */}
+        {study.theCatch ? (
+          <Prose heading="The catch" body={study.theCatch} />
+        ) : null}
+
+        <Prose heading="Outcome" body={study.outcome} />
       </div>
 
       <div className="space-y-8 lg:col-span-5">
-        <dl className="divide-y divide-line border-y border-line font-mono text-sm">
-          {/* Build type runs long enough to wrap, so it stacks rather than
-              sitting opposite its label like the short metric values do. */}
-          <div className="py-3">
-            <dt className="label text-mute">Build type</dt>
-            <dd className="mt-1.5 leading-relaxed text-bone/80">
-              {study.buildType}
-            </dd>
-          </div>
-          {study.metrics.map((m) => (
-            <div key={m.k} className="flex justify-between gap-6 py-3">
-              <dt className="label text-mute">{m.k}</dt>
-              <dd className="text-right">{m.v}</dd>
-            </div>
-          ))}
-        </dl>
+        {/* A study with nothing to report renders no table at all, rather
+            than an empty ruled box. */}
+        {study.metrics.length ? (
+          <dl className="divide-y divide-line border-y border-line font-mono text-sm">
+            {study.metrics.map((m) => (
+              <div key={m.k} className="flex justify-between gap-6 py-3">
+                <dt className="label text-mute">{m.k}</dt>
+                <dd className="text-right">{m.v}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
 
         <div>
           <h4 className="label mb-3 text-mute">Stack</h4>
@@ -190,6 +214,15 @@ function CaseBody({ study }: { study: CaseStudy }) {
           </ul>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Prose({ heading, body }: { heading: string; body: string }) {
+  return (
+    <div>
+      <h4 className="label mb-2 text-[rgb(var(--tone))]">{heading}</h4>
+      <p className="max-w-[60ch] leading-relaxed text-bone/80">{body}</p>
     </div>
   );
 }
