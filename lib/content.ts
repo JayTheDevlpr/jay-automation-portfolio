@@ -153,8 +153,7 @@ export const TOOLS: ToolGroup[] = [
     layer: "CRM & Pipeline",
     tone: "lime",
     tools: [
-      // No brand mark in any public icon source, so this one is a lettermark.
-      { name: "GoHighLevel" },
+      logo("GoHighLevel", "gohighlevel"),
       logo("Airtable", "airtable"),
       logo("HubSpot", "hubspot"),
     ],
