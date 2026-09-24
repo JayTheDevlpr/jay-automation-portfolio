@@ -42,6 +42,7 @@ function hslToHex(h, s, l) {
 }
 
 const TARGETS = {
+  github: "siGithub",
   make: "siMake",
   elevenlabs: "siElevenlabs",
   airtable: "siAirtable",

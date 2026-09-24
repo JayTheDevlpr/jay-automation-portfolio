@@ -138,7 +138,6 @@ export const TOOLS: ToolGroup[] = [
     tone: "bone",
     tools: [
       logo("OpenAI", "openai"),
-      logo("ChatGPT", "chatgpt"),
       logo("Anthropic (Claude)", "anthropic"),
       logo("DeepSeek", "deepseek"),
       logo("Gemini", "gemini"),
@@ -178,6 +177,7 @@ export const TOOLS: ToolGroup[] = [
       logo("Claude Code", "claudecode"),
       logo("VS Code", "vscode"),
       logo("MCP", "mcp"),
+      logo("GitHub", "github"),
     ],
   },
 ];
