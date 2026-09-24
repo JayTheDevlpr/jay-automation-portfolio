@@ -6,6 +6,7 @@ import { CASE_STUDIES, type CaseStudy } from "@/lib/content";
 import { EASE, useMotionMode } from "@/lib/motion";
 import { toneStyle } from "@/lib/tone";
 import SectionHeading from "./SectionHeading";
+import ToolLogo from "./ToolLogo";
 
 export default function CaseStudies() {
   // Accordion: at most one case study open at a time.
@@ -166,16 +167,26 @@ function CaseBody({ study }: { study: CaseStudy }) {
 
         <div>
           <h4 className="label mb-3 text-mute">Stack</h4>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
-            {study.stack.map((tool) => (
-              <li key={tool} className="flex items-center gap-2">
-                <span
-                  aria-hidden
-                  className="inline-block h-2 w-2 bg-[rgb(var(--tone))]"
-                />
-                {tool}
-              </li>
-            ))}
+          {/* Same treatment as the Stack section: frameless marks, name on
+              hover or tap. Studies still carrying placeholder tools have no
+              logo to show, so those stay as text. */}
+          <ul className="flex flex-wrap gap-x-7 gap-y-5">
+            {study.stack.map((tool) =>
+              tool.logo ? (
+                <ToolLogo key={tool.name} tool={tool} />
+              ) : (
+                <li
+                  key={tool.name}
+                  className="flex items-center gap-2 font-mono text-sm"
+                >
+                  <span
+                    aria-hidden
+                    className="inline-block h-2 w-2 bg-[rgb(var(--tone))]"
+                  />
+                  {tool.name}
+                </li>
+              ),
+            )}
           </ul>
         </div>
       </div>

@@ -200,7 +200,7 @@ export type CaseStudy = {
   theCatch?: string;
   outcome: string;
   metrics: { k: string; v: string }[];
-  stack: string[];
+  stack: Tool[];
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -210,15 +210,14 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "ember",
     categoryLabel: "Workflow Automation",
     title: "AI Lead Triage & Response System",
-    buildType:
-      "Personal portfolio project — built and tested solo, no real client or production traffic involved.",
+    buildType: "Personal portfolio build — solo project",
     stat: { value: "4.0s", label: "form submission to full reply" },
     summary:
       "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",
     problem:
       "Leads that fill out a form typically wait hours — sometimes a full day — before anyone follows up. In that gap, they often go cold or move on to a competitor.",
     build:
-      "Make.com orchestrates the flow: a webhook catches the form submission, two OpenAI (gpt-4o-mini) calls score the lead and generate talking points, Airtable logs the record, Slack alerts the owner, and Gmail sends a personalized reply — with a live Cal.com API call pulling the real next-open slot into that reply.",
+      "Make.com orchestrates the flow via a router that splits leads into three tiers — hot, warm, or cold — each handled differently. A webhook catches the form submission, then two GPT-4o-mini calls score the lead and generate personalized talking points. Hot leads trigger a live Cal.com API call pulling the next open slot directly into the reply email. All tiers log to Airtable, ping Slack, and send a personalized Gmail reply. Warm and cold leads enter a follow-up sequence with timed delays. If no response, the system follows up automatically. Low-confidence scores flag the lead for human review instead of guessing.",
     theCatch:
       "Midway through, I had to decide: should the Cal.com integration auto-book the call, or just show the lead a live open time to click? Auto-booking needed a second API call (POST /bookings) plus confirmation/cancellation handling — a much bigger build. I scoped it down to read-only availability (GET /slots) instead: the lead gets a real, live time with one click to confirm, but the system doesn't commit anything on their behalf without them acting. Smaller and more honest than claiming full auto-booking.",
     outcome:
@@ -226,12 +225,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     // No production data to report, so no metrics rather than placeholder ones.
     metrics: [],
     stack: [
-      "Make.com",
-      "OpenAI (GPT-4o-mini)",
-      "Airtable",
-      "Slack",
-      "Gmail",
-      "Cal.com API",
+      logo("Make.com", "make"),
+      logo("OpenAI", "openai"),
+      logo("Airtable", "airtable"),
+      logo("Slack", "slack"),
+      logo("Cal.com", "caldotcom"),
+      logo("Gmail", "gmail"),
     ],
   },
   {
@@ -254,7 +253,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { k: "Leads / month", v: "Placeholder" },
       { k: "Response time", v: "Placeholder" },
     ],
-    stack: ["Tool A", "Tool B", "Tool C"],
+    stack: [{ name: "Tool A" }, { name: "Tool B" }, { name: "Tool C" }],
   },
   {
     id: "cs-voice",
@@ -276,7 +275,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { k: "Calls / month", v: "Placeholder" },
       { k: "Handoff rate", v: "Placeholder" },
     ],
-    stack: ["VAPI", "Tool B", "Tool C"],
+    stack: [{ name: "VAPI" }, { name: "Tool B" }, { name: "Tool C" }],
   },
   {
     id: "cs-rag",
@@ -298,7 +297,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { k: "Documents indexed", v: "Placeholder" },
       { k: "Deflection rate", v: "Placeholder" },
     ],
-    stack: ["Tool A", "Tool B", "Tool C"],
+    stack: [{ name: "Tool A" }, { name: "Tool B" }, { name: "Tool C" }],
   },
 ];
 
