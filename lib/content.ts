@@ -267,21 +267,65 @@ export const CASE_STUDIES: CaseStudy[] = [
     category: "leads",
     tone: "lime",
     categoryLabel: "CRM & Pipeline Automation",
-    title: "Placeholder case study title two",
-    stat: { value: "3.1×", label: "qualified-lead rate" },
-    summary: "One-line placeholder summary of the engagement.",
-    problem:
-      "Placeholder problem. How leads were being handled before, and where good ones were slipping through.",
-    build:
-      "Placeholder build. The scoring, enrichment and routing logic, and how it writes back to the CRM.",
-    outcome:
-      "Placeholder outcome. How response time and conversion moved once the pipeline was running.",
-    metrics: [
-      { k: "Timeline", v: "Placeholder" },
-      { k: "Leads / month", v: "Placeholder" },
-      { k: "Response time", v: "Placeholder" },
+    title: "GHL Agency System",
+    stat: { value: "60s", label: "hot lead to booked appointment" },
+    summary:
+      "An AI system that qualifies every inbound lead, books hot prospects straight onto the calendar, and nurtures the rest — automatically, end to end.",
+    video: {
+      id: "1x9ELW9R8bE",
+      title: "Walkthrough: GHL Agency System",
+    },
+    shots: [
+      {
+        src: "/images/projects/project-2/canvas-full.png",
+        alt: "The whole n8n canvas, with every route colour-coded as its own lane: qualification, the hot path, the warm nurture, the cold re-engagement, the no-show and completed handlers, and error handling.",
+        w: 1320,
+        h: 529,
+      },
+      {
+        src: "/images/projects/project-2/hot-path.png",
+        alt: "The hot lane step by step — instant SMS, personalized email, a live free-slot lookup, the booking, the move to the Booked stage, then the confirmation email and 24-hour and 1-hour reminders — with the warm and cold lanes beneath it.",
+        w: 1323,
+        h: 527,
+      },
+      {
+        src: "/images/projects/project-2/handlers.png",
+        alt: "The no-show handler moving an opportunity to No-Show and sending a rebooking email, the completed handler waiting two hours before its review request, and the error handler alerting Slack with a Gmail fallback.",
+        w: 1326,
+        h: 530,
+      },
+      {
+        src: "/images/projects/project-2/ghl-pipeline.png",
+        alt: "The GoHighLevel opportunities board, its stages running New Lead, Hot, Warm, Cold, Booked, Confirmed, Completed, No-Show and Re-engaged, with a lead sitting in Booked.",
+        w: 1952,
+        h: 468,
+      },
+      {
+        src: "/images/projects/project-2/ghl-contact.png",
+        alt: "The contact record the run produced in GoHighLevel, tagged hot-lead and appointment-booked, its activity showing the opportunity and the Strategy Session appointment created from the form submission.",
+        w: 1164,
+        h: 565,
+      },
     ],
-    stack: [{ name: "Tool A" }, { name: "Tool B" }, { name: "Tool C" }],
+    problem:
+      "Most agencies lose leads because follow-up is manual and slow. A hot lead that waits an hour is already cold. This system was built to close that gap — every lead qualified, routed, and handled in under 60 seconds, with no one lifting a finger.",
+    build:
+      "n8n orchestrates the full flow. A GHL webhook fires the moment a form is submitted — GPT-4o-mini reads the lead and scores it HOT, WARM, or COLD, the way a salesperson would in the first 10 seconds of a call. The contact and opportunity are created in GHL instantly, dropped into the correct pipeline stage. Hot leads get an instant SMS, a personalized email reply, a real-time calendar slot lookup, and an auto-booked Strategy Session — confirmation email and 24h + 1h reminders included. Warm leads enter a 5-day nurture sequence: Day 1 intro, Day 3 value email, Day 5 SMS follow-up. Cold leads are logged and re-engaged at Day 14. A duplicate lead check prevents double-booking. No-shows trigger a rebooking email and move the opportunity to the No-Show stage. Showed leads move to Completed, wait 2 hours, then receive an automatic review request. Every path alerts Slack. Any node failure fires an error handler — Slack alert plus Gmail fallback — so nothing fails silently.",
+    theCatch:
+      "The video script says \"SMS-ready as it scales\" — that's only half true. Twilio's trial account blocks SMS to Philippine numbers. Every SMS node is set to continueRegularOutput so the workflow doesn't break, but SMS delivery to non-US numbers won't work without upgrading. Scoped as a known production limitation, not a bug — and documented honestly here rather than hidden.",
+    outcome:
+      "A full agency intake system — lead in, qualified, booked, nurtured, and followed up with automatically. No CRM left untouched, no lead unhandled. Built and tested solo as a portfolio project.",
+    // A solo build with no production traffic, so no metrics rather than
+    // placeholder ones.
+    metrics: [],
+    stack: [
+      logo("n8n", "n8n"),
+      logo("OpenAI", "openai"),
+      logo("GoHighLevel", "gohighlevel"),
+      logo("Twilio", "twilio"),
+      logo("Gmail", "gmail"),
+      logo("Slack", "slack"),
+    ],
   },
   {
     id: "cs-voice",
