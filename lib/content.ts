@@ -438,22 +438,63 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: "cs-rag",
     category: "rag",
     tone: "ice",
-    categoryLabel: "RAG / AI Knowledge Agents",
-    title: "Placeholder case study title four",
-    stat: { value: "94%", label: "answers grounded in source" },
-    summary: "One-line placeholder summary of the engagement.",
-    problem:
-      "Placeholder problem. Knowledge scattered across documents, and people asking the same questions repeatedly.",
-    build:
-      "Placeholder build. Ingestion, chunking and retrieval choices, and how answers cite their sources.",
-    outcome:
-      "Placeholder outcome. How much support or internal-search load dropped, and how it was measured.",
-    metrics: [
-      { k: "Timeline", v: "Placeholder" },
-      { k: "Documents indexed", v: "Placeholder" },
-      { k: "Deflection rate", v: "Placeholder" },
+    categoryLabel: "RAG & AI Knowledge Agents",
+    title: "RAG Knowledge Agent",
+    stat: {
+      logo: { src: "/logos/n8n.svg", alt: "n8n" },
+      label: "self-indexing · confidence-gated · fully logged",
+    },
+    summary:
+      "An AI knowledge agent that answers customer questions directly from a company's own documents — automatically, with no manual searching, no guessing, and no unanswered questions falling through the cracks.",
+    video: {
+      id: "65y76ykoQKU",
+      title: "Walkthrough: RAG Knowledge Agent",
+    },
+    shots: [
+      {
+        src: "/images/projects/project-4/canvas-full.png",
+        alt: "The whole n8n canvas: the Google Drive ingestion pipeline along the top — download, extract, chunk, embed, upsert to Supabase — and the Telegram chat pipeline beneath it, running embed, vector search, confidence check, and the split into the answer and escalation lanes.",
+        w: 1331,
+        h: 509,
+        caption: "n8n canvas — ingestion and chat pipelines",
+      },
+      {
+        src: "/images/projects/project-4/canvas-zoomin.png",
+        alt: "A closer view of the decision point: the Claude Haiku confidence check feeding an if-node, the high-confidence branch running Claude Sonnet, the Telegram reply, the Supabase save and the Sheets log, and the low-confidence branch writing an escalation message and alerting Slack.",
+        w: 1318,
+        h: 534,
+        caption: "Zoomed in — confidence gate and answer/escalation paths",
+      },
+      {
+        src: "/images/projects/project-4/supabase.png",
+        alt: "The Supabase documents table, each row a chunk of an ingested PDF with its text content, metadata and the vector embedding stored alongside it.",
+        w: 1359,
+        h: 599,
+        caption: "Supabase documents table — chunks with vector embeddings",
+      },
     ],
-    stack: [{ name: "Tool A" }, { name: "Tool B" }, { name: "Tool C" }],
+    problem:
+      "Customers keep asking the same questions. The answers already exist somewhere — a policy doc, a pricing sheet, a FAQ. But nobody has time to dig through files every time someone messages in. Replies get slow, or someone ends up repeating the same answers all day.",
+    build:
+      "Two pipelines run in parallel. The ingestion pipeline watches a Google Drive folder — the moment a file is added, n8n picks it up, extracts the PDF text, splits it into 512-character chunks with 50-character overlap, converts each chunk into a vector using OpenAI text-embedding-3-small, and upserts it into Supabase. A Slack alert confirms how many chunks were stored. The chat pipeline triggers on every Telegram message. The question is embedded using the same model, then matched against the Supabase vector store — top 5 chunks retrieved by similarity. Claude Haiku runs a confidence check (0–100) against those chunks. Above 70: Claude Sonnet 4.6 generates the answer using the chunks plus the last 5 messages of conversation history, replies via Telegram, saves the exchange to Supabase, and logs everything to Google Sheets. Below 70: Claude Haiku writes a polite escalation message, Telegram delivers it, and Slack alerts a human with the exact question. Every interaction is logged — question, answer, confidence score, model used, chunks retrieved, and whether it was answered.",
+    theCatch:
+      "The confidence gate was the hardest decision. The naive approach is to always answer — but that means the AI guesses when it doesn't know, and confidently wrong answers are worse than no answer. The solution was a two-model architecture: Claude Haiku checks first (cheap, fast, disposable), Claude Sonnet only answers when confidence clears 70. Below that threshold, the system admits it doesn't know and pulls in a human. That honesty is the feature, not a limitation.",
+    outcome:
+      "Drop a file into Google Drive — it's searchable in seconds. Ask a question on Telegram — it's answered from the actual document, not hallucinated. Ask something the system doesn't know — a human is alerted immediately. Every interaction logged, every document self-indexing. Built and tested solo as a portfolio project.",
+    // A solo build with no production traffic, so no metrics rather than
+    // placeholder ones.
+    metrics: [],
+    stack: [
+      logo("n8n", "n8n"),
+      logo("OpenAI", "openai"),
+      logo("Supabase", "supabase"),
+      logo("Claude Haiku (Anthropic)", "anthropic"),
+      logo("Claude Sonnet (Anthropic)", "anthropic"),
+      logo("Google Drive", "googledrive"),
+      logo("Telegram", "telegram"),
+      logo("Google Sheets", "googlesheets"),
+      logo("Slack", "slack"),
+    ],
   },
 ];
 
