@@ -122,7 +122,14 @@ function CaseCard({
               </span>
             )}
 
-            <span className="label text-mute">
+            {/* One line from xl up, where the stat column is wide enough to
+                hold it at a readable size: 0.6rem clears 1280px and 0.7rem
+                clears 1536px. Below xl the four-column header squeezes this
+                track to 164-239px, where one line would mean 4.7-6.9px type
+                — or, since a grid track's min width is its content, a line
+                that pushes the track wider and crushes the title beside it.
+                So it wraps there instead, between phrases. */}
+            <span className="label text-mute xl:whitespace-nowrap xl:text-[0.6rem] 2xl:text-[0.7rem]">
               {/* A label with no separators comes back as a single part, so
                   this renders the short ones unchanged. The spaces around each
                   separator are the only break opportunities once the phrases
