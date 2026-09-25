@@ -100,11 +100,32 @@ function CaseCard({
                 <span className="label text-mute">{study.stat.label}</span>
               </>
             ) : (
-              // Carrying the callout on its own, so it takes the tone and a
-              // step up in size rather than the muted caption treatment it
-              // gets when it sits beside a number.
-              <span className="label text-[0.8rem] leading-relaxed text-[rgb(var(--tone))]">
-                {study.stat.label}
+              // Carrying the callout on its own, so it gets its own face and
+              // a size that holds the column, rather than the muted caption
+              // treatment it takes when it sits beside a number. The
+              // separators drop to 40% so the phrases read as three beats
+              // and the dots stay punctuation.
+              <span className="font-stat text-[clamp(1.4rem,2.4vw,1.8rem)] uppercase leading-[1.05] tracking-[0.15em] text-[rgb(var(--tone))]">
+                {study.stat.label.split("·").map((part, i) => (
+                  <span key={part}>
+                    {/* The spaces around the separator are the only break
+                        opportunities left once each phrase is nowrap, so the
+                        line wraps between phrases instead of splitting
+                        "auto-reply" at its hyphen. */}
+                    {i > 0 ? (
+                      <>
+                        {" "}
+                        <span
+                          aria-hidden
+                          className="text-[rgb(var(--tone)/0.4)]"
+                        >
+                          ·
+                        </span>{" "}
+                      </>
+                    ) : null}
+                    <span className="whitespace-nowrap">{part.trim()}</span>
+                  </span>
+                ))}
               </span>
             )}
           </span>
