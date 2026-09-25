@@ -292,30 +292,37 @@ export const CASE_STUDIES: CaseStudy[] = [
         alt: "The whole n8n canvas, with every route colour-coded as its own lane: qualification, the hot path, the warm nurture, the cold re-engagement, the no-show and completed handlers, and error handling.",
         w: 1320,
         h: 529,
+        caption: "n8n workflow — full system overview across all lead tiers",
       },
       {
         src: "/images/projects/project-2/hot-path.png",
         alt: "The hot lane step by step — instant SMS, personalized email, a live free-slot lookup, the booking, the move to the Booked stage, then the confirmation email and 24-hour and 1-hour reminders — with the warm and cold lanes beneath it.",
         w: 1323,
         h: 527,
+        caption:
+          "HOT path: instant SMS, calendar lookup, auto-booking, reminders",
       },
       {
         src: "/images/projects/project-2/handlers.png",
         alt: "The no-show handler moving an opportunity to No-Show and sending a rebooking email, the completed handler waiting two hours before its review request, and the error handler alerting Slack with a Gmail fallback.",
         w: 1326,
         h: 530,
+        caption: "No-show, completed, error, and review handlers",
       },
       {
         src: "/images/projects/project-2/ghl-pipeline.png",
         alt: "The GoHighLevel opportunities board, its stages running New Lead, Hot, Warm, Cold, Booked, Confirmed, Completed, No-Show and Re-engaged, with a lead sitting in Booked.",
         w: 1952,
         h: 468,
+        caption: "GHL pipeline — 9 stages from New Lead to Re-engaged",
       },
       {
         src: "/images/projects/project-2/ghl-contact.png",
         alt: "The contact record the run produced in GoHighLevel, tagged hot-lead and appointment-booked, its activity showing the opportunity and the Strategy Session appointment created from the form submission.",
         w: 1164,
         h: 565,
+        caption:
+          "GHL contact record — tags, appointment, and source logged automatically",
       },
     ],
     problem:
