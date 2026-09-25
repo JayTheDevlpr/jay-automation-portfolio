@@ -243,12 +243,14 @@ export const CASE_STUDIES: CaseStudy[] = [
         alt: "The full Make.com scenario: a linear intake chain of webhook, scoring and formatting steps feeding a router that fans out into three lead tiers.",
         w: 1282,
         h: 585,
+        caption: "Make.com canvas — full workflow overview",
       },
       {
         src: "/images/projects/project-1/router-hot-branch.png",
         alt: "The router's three branches in detail, the hot-lead path running Airtable, Slack and Gmail steps with timed delays between follow-ups.",
         w: 1269,
         h: 574,
+        caption: "Router branching: HOT, WARM, and COLD lead paths",
       },
     ],
     problem:
