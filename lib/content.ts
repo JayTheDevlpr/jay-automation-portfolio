@@ -188,14 +188,12 @@ export type CaseStudy = {
   tone: ToneId;
   categoryLabel: string;
   title: string;
-  // The anchor above the descriptor is either a figure or a brand mark,
-  // never both. `stacked` sets the descriptor under it rather than on its
-  // baseline, for a descriptor too long to sit beside it.
+  // The anchor beside the descriptor is either a figure or a brand mark,
+  // never both.
   stat: {
     value?: string;
     logo?: { src: string; alt: string };
     label: string;
-    stacked?: boolean;
   };
   summary: string;
   // A walkthrough, shown above Problem. `id` is the YouTube video id.
@@ -222,8 +220,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "AI Lead Triage & Response System",
     stat: {
       logo: { src: "/logos/make.svg", alt: "Make.com" },
-      label: "tiers · auto-reply · zero manual sorting",
-      stacked: true,
+      // Stored lower case; the .label rule sets it in caps.
+      label: "personalized reply · live booking · zero manual sorting",
     },
     summary:
       "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",

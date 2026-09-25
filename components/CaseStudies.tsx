@@ -92,11 +92,13 @@ function CaseCard({
           </span>
 
           {/* Each study leads with an anchor — a figure, or a brand mark
-              where the platform is the point. Only the descriptor's length
-              decides whether it sits beside the anchor or under it. */}
+              where the platform is the point — with its descriptor beside
+              it. A mark centres against the text; a numeral sits on its
+              baseline, which is what makes a figure and its caption read as
+              one line. */}
           <span
-            className={`order-last col-span-2 md:order-none md:col-span-1 ${
-              study.stat.stacked ? "" : "flex items-baseline gap-3"
+            className={`order-last col-span-2 flex gap-3 md:order-none md:col-span-1 ${
+              study.stat.logo ? "items-center" : "items-baseline"
             }`}
           >
             {study.stat.logo ? (
@@ -112,23 +114,15 @@ function CaseCard({
                 height={40}
                 loading="lazy"
                 decoding="async"
-                className="block h-10 w-10 object-contain"
+                className="h-10 w-10 shrink-0 object-contain"
               />
             ) : (
-              <span
-                className={`display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))] ${
-                  study.stat.stacked ? "block leading-none" : ""
-                }`}
-              >
+              <span className="display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))]">
                 {study.stat.value}
               </span>
             )}
 
-            <span
-              className={`label text-mute ${
-                study.stat.stacked ? "mt-2 block" : ""
-              }`}
-            >
+            <span className="label text-mute">
               {/* A label with no separators comes back as a single part, so
                   this renders the short ones unchanged. The spaces around each
                   separator are the only break opportunities once the phrases
