@@ -296,29 +296,44 @@ function Shots({ shots }: { shots: Shot[] }) {
 
   return (
     <>
-      <ul className="flex flex-wrap gap-3">
+      {/* The width sits on each item rather than the button, so a caption
+          wraps to the thumbnail's measure instead of the row's. */}
+      <ul className="flex flex-wrap gap-x-4 gap-y-5">
         {shots.map((s, i) => (
-          <li key={s.src}>
-            {/* The description lives on the button, so the thumbnail itself is
-                decorative — otherwise a screen reader reads it twice. */}
-            <button
-              type="button"
-              aria-label={`Expand screenshot: ${s.alt}`}
-              onClick={(e) => {
-                openerRef.current = e.currentTarget;
-                setOpenIndex(i);
-              }}
-              className="block w-44 border border-line transition-colors hover:border-[rgb(var(--tone))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--tone))] sm:w-52"
-            >
-              <Image
-                src={s.src}
-                alt=""
-                width={s.w}
-                height={s.h}
-                sizes="208px"
-                className="h-auto w-full"
-              />
-            </button>
+          <li key={s.src} className="w-44 sm:w-52">
+            <figure>
+              {/* The description lives on the button, so the thumbnail
+                  itself is decorative — otherwise a screen reader reads it
+                  twice. */}
+              <button
+                type="button"
+                aria-label={`Expand screenshot: ${s.alt}`}
+                onClick={(e) => {
+                  openerRef.current = e.currentTarget;
+                  setOpenIndex(i);
+                }}
+                className="block w-full border border-line transition-colors hover:border-[rgb(var(--tone))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--tone))]"
+              >
+                <Image
+                  src={s.src}
+                  alt=""
+                  width={s.w}
+                  height={s.h}
+                  sizes="208px"
+                  className="h-auto w-full"
+                />
+              </button>
+
+              {/* Mono like the site's other small type, but left in its own
+                  case rather than the uppercase .label rule: these name
+                  camelCase tools, and TOOL ROUTING: CHECKAVAILABILITY reads
+                  as one word. */}
+              {s.caption ? (
+                <figcaption className="mt-2 font-mono text-[0.68rem] leading-snug text-mute">
+                  {s.caption}
+                </figcaption>
+              ) : null}
+            </figure>
           </li>
         ))}
       </ul>

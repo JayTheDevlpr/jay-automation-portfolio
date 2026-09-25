@@ -199,8 +199,16 @@ export type CaseStudy = {
   // A walkthrough, shown above Problem. `id` is the YouTube video id.
   video?: { id: string; title: string };
   // Screenshots, shown after Build. Intrinsic size is stored so the
-  // browser can reserve the space before the file loads.
-  shots?: { src: string; alt: string; w: number; h: number }[];
+  // browser can reserve the space before the file loads. `alt` describes
+  // the image for anyone who can't see it; the optional `caption` is the
+  // short line printed under it for everyone.
+  shots?: {
+    src: string;
+    alt: string;
+    w: number;
+    h: number;
+    caption?: string;
+  }[];
   problem: string;
   build: string;
   // The trade-off worth owning. Optional, since not every build has one that
@@ -352,36 +360,45 @@ export const CASE_STUDIES: CaseStudy[] = [
         alt: "The whole n8n workflow at a glance, every lane visible at once: the incoming call routing, the service-area check, the live calendar availability lookup, the booking sequence, the success and failure handling, transfer detection, and the post-call summary and logging.",
         w: 1321,
         h: 530,
+        caption: "n8n workflow — full canvas overview",
       },
       {
         src: "/images/projects/project-3/vapi-dashboard.png",
         alt: "The VAPI assistant for the demo client, its transcriber, model and voice panels showing Claude Sonnet 4.6 as the brain, and the greeting it opens every call with.",
         w: 1365,
         h: 615,
+        caption: "VAPI assistant config — Claude Sonnet 4.6 as the voice model",
       },
       {
         src: "/images/projects/project-3/canvas-first-half.png",
         alt: "The first half of the n8n canvas: the VAPI tool webhook routing by message type, the service-area check that tags and declines out-of-area callers, transfer detection, and the post-call lane that summarizes the transcript and logs it.",
         w: 1324,
         h: 511,
+        caption:
+          "Post-call handler: AI summary, GHL logging, transfer detection",
       },
       {
         src: "/images/projects/project-3/canvas-second-half.png",
         alt: "The second half: the live Google Calendar availability check, the booking lane creating the GHL contact, calendar event and appointment in sequence, the success lane firing Slack, Gmail and SMS, and the failure handling beneath it.",
         w: 1305,
         h: 532,
+        caption:
+          "Tool routing: checkAvailability, bookAppointment, checkServiceArea",
       },
       {
         src: "/images/projects/project-3/ghl-contact.png",
         alt: "The contact the call produced in GoHighLevel, tagged voice-agent-call and sourced to the VAPI call log, beside the roofing appointment booked onto the Job Site Visits calendar.",
         w: 1471,
         h: 920,
+        caption: "GHL contact created automatically during the call",
       },
       {
         src: "/images/projects/project-3/sheets-log.png",
         alt: "The Google Sheets call log row: timestamp, caller number, end reason, the AI summary of the call, and the extracted lead quality, sentiment and follow-up flag.",
         w: 1311,
         h: 72,
+        caption:
+          "Google Sheets call log — AI-extracted summary and lead quality",
       },
     ],
     problem:
