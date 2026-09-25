@@ -270,7 +270,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "GHL Agency System",
     stat: {
       logo: { src: "/logos/gohighlevel.svg", alt: "GoHighLevel" },
-      label: "hot lead to booked appointment",
+      label: "qualified · booked · nurtured · auto",
     },
     summary:
       "An AI system that qualifies every inbound lead, books hot prospects straight onto the calendar, and nurtures the rest — automatically, end to end.",
