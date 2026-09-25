@@ -91,43 +91,48 @@ function CaseCard({
             </span>
           </span>
 
-          <span className="order-last col-span-2 flex items-baseline gap-3 md:order-none md:col-span-1">
-            {study.stat.value ? (
-              <>
-                <span className="display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))]">
-                  {study.stat.value}
+          {/* Every study leads with a number; only the descriptor's length
+              decides whether it sits beside it or under it. */}
+          <span
+            className={`order-last col-span-2 md:order-none md:col-span-1 ${
+              study.stat.stacked ? "" : "flex items-baseline gap-3"
+            }`}
+          >
+            <span
+              className={`display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))] ${
+                study.stat.stacked ? "block leading-none" : ""
+              }`}
+            >
+              {study.stat.value}
+            </span>
+
+            <span
+              className={`label text-mute ${
+                study.stat.stacked ? "mt-2 block" : ""
+              }`}
+            >
+              {/* A label with no separators comes back as a single part, so
+                  this renders the short ones unchanged. The spaces around each
+                  separator are the only break opportunities once the phrases
+                  are nowrap, so a long descriptor wraps between phrases rather
+                  than splitting "auto-reply" at its hyphen. */}
+              {study.stat.label.split("·").map((part, i) => (
+                <span key={part}>
+                  {i > 0 ? (
+                    <>
+                      {" "}
+                      <span
+                        aria-hidden
+                        className="text-[rgb(var(--mute)/0.45)]"
+                      >
+                        ·
+                      </span>{" "}
+                    </>
+                  ) : null}
+                  <span className="whitespace-nowrap">{part.trim()}</span>
                 </span>
-                <span className="label text-mute">{study.stat.label}</span>
-              </>
-            ) : (
-              // Carrying the callout on its own, so it gets its own face and
-              // a size that holds the column, rather than the muted caption
-              // treatment it takes when it sits beside a number. The
-              // separators drop to 40% so the phrases read as three beats
-              // and the dots stay punctuation.
-              <span className="font-stat text-[clamp(1.4rem,2.4vw,1.8rem)] uppercase leading-[1.05] tracking-[0.15em] text-[rgb(var(--tone))]">
-                {study.stat.label.split("·").map((part, i) => (
-                  <span key={part}>
-                    {/* The spaces around the separator are the only break
-                        opportunities left once each phrase is nowrap, so the
-                        line wraps between phrases instead of splitting
-                        "auto-reply" at its hyphen. */}
-                    {i > 0 ? (
-                      <>
-                        {" "}
-                        <span
-                          aria-hidden
-                          className="text-[rgb(var(--tone)/0.4)]"
-                        >
-                          ·
-                        </span>{" "}
-                      </>
-                    ) : null}
-                    <span className="whitespace-nowrap">{part.trim()}</span>
-                  </span>
-                ))}
-              </span>
-            )}
+              ))}
+            </span>
           </span>
 
           <PlusMinus open={open} />

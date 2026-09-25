@@ -188,9 +188,9 @@ export type CaseStudy = {
   tone: ToneId;
   categoryLabel: string;
   title: string;
-  // `value` is optional — a study whose point isn't a number carries the
-  // label alone, and it is set as the callout rather than as a caption.
-  stat: { value?: string; label: string };
+  // `stacked` sets the label under the number instead of beside it, for a
+  // descriptor too long to sit on the number's baseline.
+  stat: { value: string; label: string; stacked?: boolean };
   summary: string;
   // A walkthrough, shown above Problem. `id` is the YouTube video id.
   video?: { id: string; title: string };
@@ -214,7 +214,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "ember",
     categoryLabel: "Workflow Automation",
     title: "AI Lead Triage & Response System",
-    stat: { label: "3 tiers · auto-reply · zero manual sorting" },
+    stat: {
+      value: "3",
+      label: "tiers · auto-reply · zero manual sorting",
+      stacked: true,
+    },
     summary:
       "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",
     video: {
