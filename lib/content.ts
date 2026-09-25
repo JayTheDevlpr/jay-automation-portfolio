@@ -188,7 +188,9 @@ export type CaseStudy = {
   tone: ToneId;
   categoryLabel: string;
   title: string;
-  stat: { value: string; label: string };
+  // `value` is optional — a study whose point isn't a number carries the
+  // label alone, and it is set as the callout rather than as a caption.
+  stat: { value?: string; label: string };
   summary: string;
   // A walkthrough, shown above Problem. `id` is the YouTube video id.
   video?: { id: string; title: string };
@@ -212,7 +214,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     tone: "ember",
     categoryLabel: "Workflow Automation",
     title: "AI Lead Triage & Response System",
-    stat: { value: "4.0s", label: "form submission to full reply" },
+    stat: { label: "3 tiers · auto-reply · zero manual sorting" },
     summary:
       "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",
     video: {
@@ -240,7 +242,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     theCatch:
       "Midway through, I had to decide: should the Cal.com integration auto-book the call, or just show the lead a live open time to click? Auto-booking needed a second API call (POST /bookings) plus confirmation/cancellation handling — a much bigger build. I scoped it down to read-only availability (GET /slots) instead: the lead gets a real, live time with one click to confirm, but the system doesn't commit anything on their behalf without them acting. Smaller and more honest than claiming full auto-booking.",
     outcome:
-      "4.0 seconds from form submission to a fully scored, logged, and replied-to lead — measured directly from the system's own response-time logging, not estimated. Built and tested solo as a portfolio project.",
+      "From form submission to a scored, logged, and replied-to lead — no one touches it. Hot leads get a real booking slot in their inbox. Warm and cold leads enter an automatic follow-up sequence. Built and tested solo as a portfolio project.",
     // No production data to report, so no metrics rather than placeholder ones.
     metrics: [],
     stack: [

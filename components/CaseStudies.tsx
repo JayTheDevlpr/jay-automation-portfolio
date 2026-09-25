@@ -92,10 +92,21 @@ function CaseCard({
           </span>
 
           <span className="order-last col-span-2 flex items-baseline gap-3 md:order-none md:col-span-1">
-            <span className="display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))]">
-              {study.stat.value}
-            </span>
-            <span className="label text-mute">{study.stat.label}</span>
+            {study.stat.value ? (
+              <>
+                <span className="display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))]">
+                  {study.stat.value}
+                </span>
+                <span className="label text-mute">{study.stat.label}</span>
+              </>
+            ) : (
+              // Carrying the callout on its own, so it takes the tone and a
+              // step up in size rather than the muted caption treatment it
+              // gets when it sits beside a number.
+              <span className="label text-[0.8rem] leading-relaxed text-[rgb(var(--tone))]">
+                {study.stat.label}
+              </span>
+            )}
           </span>
 
           <PlusMinus open={open} />
