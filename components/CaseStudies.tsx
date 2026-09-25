@@ -91,20 +91,38 @@ function CaseCard({
             </span>
           </span>
 
-          {/* Every study leads with a number; only the descriptor's length
-              decides whether it sits beside it or under it. */}
+          {/* Each study leads with an anchor — a figure, or a brand mark
+              where the platform is the point. Only the descriptor's length
+              decides whether it sits beside the anchor or under it. */}
           <span
             className={`order-last col-span-2 md:order-none md:col-span-1 ${
               study.stat.stacked ? "" : "flex items-baseline gap-3"
             }`}
           >
-            <span
-              className={`display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))] ${
-                study.stat.stacked ? "block leading-none" : ""
-              }`}
-            >
-              {study.stat.value}
-            </span>
+            {study.stat.logo ? (
+              // A brand mark in place of a figure, at the size the Stack
+              // section sets its logos. Plain img rather than ToolLogo:
+              // that renders a button, and this sits inside the accordion's
+              // own button, which may not nest one.
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={study.stat.logo.src}
+                alt={study.stat.logo.alt}
+                width={40}
+                height={40}
+                loading="lazy"
+                decoding="async"
+                className="block h-10 w-10 object-contain"
+              />
+            ) : (
+              <span
+                className={`display text-[clamp(2.2rem,4vw,3.4rem)] text-[rgb(var(--tone))] ${
+                  study.stat.stacked ? "block leading-none" : ""
+                }`}
+              >
+                {study.stat.value}
+              </span>
+            )}
 
             <span
               className={`label text-mute ${

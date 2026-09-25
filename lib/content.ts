@@ -188,9 +188,15 @@ export type CaseStudy = {
   tone: ToneId;
   categoryLabel: string;
   title: string;
-  // `stacked` sets the label under the number instead of beside it, for a
-  // descriptor too long to sit on the number's baseline.
-  stat: { value: string; label: string; stacked?: boolean };
+  // The anchor above the descriptor is either a figure or a brand mark,
+  // never both. `stacked` sets the descriptor under it rather than on its
+  // baseline, for a descriptor too long to sit beside it.
+  stat: {
+    value?: string;
+    logo?: { src: string; alt: string };
+    label: string;
+    stacked?: boolean;
+  };
   summary: string;
   // A walkthrough, shown above Problem. `id` is the YouTube video id.
   video?: { id: string; title: string };
@@ -215,7 +221,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     categoryLabel: "Workflow Automation",
     title: "AI Lead Triage & Response System",
     stat: {
-      value: "3",
+      logo: { src: "/logos/make.svg", alt: "Make.com" },
       label: "tiers · auto-reply · zero manual sorting",
       stacked: true,
     },
