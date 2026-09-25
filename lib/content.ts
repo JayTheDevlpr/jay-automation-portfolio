@@ -315,7 +315,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     build:
       "n8n orchestrates the full flow. A GHL webhook fires the moment a form is submitted — GPT-4o-mini reads the lead and scores it HOT, WARM, or COLD, the way a salesperson would in the first 10 seconds of a call. The contact and opportunity are created in GHL instantly, dropped into the correct pipeline stage. Hot leads get an instant SMS, a personalized email reply, a real-time calendar slot lookup, and an auto-booked Strategy Session — confirmation email and 24h + 1h reminders included. Warm leads enter a 5-day nurture sequence: Day 1 intro, Day 3 value email, Day 5 SMS follow-up. Cold leads are logged and re-engaged at Day 14. A duplicate lead check prevents double-booking. No-shows trigger a rebooking email and move the opportunity to the No-Show stage. Showed leads move to Completed, wait 2 hours, then receive an automatic review request. Every path alerts Slack. Any node failure fires an error handler — Slack alert plus Gmail fallback — so nothing fails silently.",
     theCatch:
-      "The video script says \"SMS-ready as it scales\" — that's only half true. Twilio's trial account blocks SMS to Philippine numbers. Every SMS node is set to continueRegularOutput so the workflow doesn't break, but SMS delivery to non-US numbers won't work without upgrading. Scoped as a known production limitation, not a bug — and documented honestly here rather than hidden.",
+      "The video script says \"SMS-ready as it scales\" — that's only half true. Twilio's trial account blocks SMS to Philippine numbers. Every SMS node is set to continueRegularOutput so the workflow doesn't break, but SMS delivery to non-US numbers won't work without upgrading. Scoped as a known production limitation, not a bug — and documented honestly here rather than hidden. A review handler is also built and wired — but GHL's native review webhook is a paid add-on, so it's documented as a stub rather than a connected path.",
     outcome:
       "A full agency intake system — lead in, qualified, booked, nurtured, and followed up with automatically. No CRM left untouched, no lead unhandled. Built and tested solo as a portfolio project.",
     // A solo build with no production traffic, so no metrics rather than
@@ -335,21 +335,78 @@ export const CASE_STUDIES: CaseStudy[] = [
     category: "voice",
     tone: "rose",
     categoryLabel: "Voice AI Agents (VAPI)",
-    title: "Placeholder case study title three",
-    stat: { value: "24/7", label: "calls answered" },
-    summary: "One-line placeholder summary of the engagement.",
-    problem:
-      "Placeholder problem. Missed calls, after-hours gaps, or a front desk stretched too thin.",
-    build:
-      "Placeholder build. The voice agent's flow, handoff rules, integrations and guardrails.",
-    outcome:
-      "Placeholder outcome. Call volume handled, bookings made, and what staff stopped having to do.",
-    metrics: [
-      { k: "Timeline", v: "Placeholder" },
-      { k: "Calls / month", v: "Placeholder" },
-      { k: "Handoff rate", v: "Placeholder" },
+    title: "AI Voice Receptionist",
+    stat: {
+      logo: { src: "/logos/vapi.svg", alt: "VAPI" },
+      label: "instant answer · real booking · zero manual work",
+    },
+    summary:
+      "An AI voice receptionist that answers every inbound call, qualifies the caller, checks live calendar availability, and books the appointment — automatically, while still on the phone.",
+    video: {
+      id: "2-vzHshJRkg",
+      title: "Walkthrough: AI Voice Receptionist",
+    },
+    shots: [
+      {
+        src: "/images/projects/project-3/canvas-full.png",
+        alt: "The whole n8n workflow at a glance, every lane visible at once: the incoming call routing, the service-area check, the live calendar availability lookup, the booking sequence, the success and failure handling, transfer detection, and the post-call summary and logging.",
+        w: 1321,
+        h: 530,
+      },
+      {
+        src: "/images/projects/project-3/vapi-dashboard.png",
+        alt: "The VAPI assistant for the demo client, its transcriber, model and voice panels showing Claude Sonnet 4.6 as the brain, and the greeting it opens every call with.",
+        w: 1365,
+        h: 615,
+      },
+      {
+        src: "/images/projects/project-3/canvas-first-half.png",
+        alt: "The first half of the n8n canvas: the VAPI tool webhook routing by message type, the service-area check that tags and declines out-of-area callers, transfer detection, and the post-call lane that summarizes the transcript and logs it.",
+        w: 1324,
+        h: 511,
+      },
+      {
+        src: "/images/projects/project-3/canvas-second-half.png",
+        alt: "The second half: the live Google Calendar availability check, the booking lane creating the GHL contact, calendar event and appointment in sequence, the success lane firing Slack, Gmail and SMS, and the failure handling beneath it.",
+        w: 1305,
+        h: 532,
+      },
+      {
+        src: "/images/projects/project-3/ghl-contact.png",
+        alt: "The contact the call produced in GoHighLevel, tagged voice-agent-call and sourced to the VAPI call log, beside the roofing appointment booked onto the Job Site Visits calendar.",
+        w: 1471,
+        h: 920,
+      },
+      {
+        src: "/images/projects/project-3/sheets-log.png",
+        alt: "The Google Sheets call log row: timestamp, caller number, end reason, the AI summary of the call, and the extracted lead quality, sentiment and follow-up flag.",
+        w: 1311,
+        h: 72,
+      },
     ],
-    stack: [{ name: "VAPI" }, { name: "Tool B" }, { name: "Tool C" }],
+    problem:
+      "A roofing crew is out on job sites most of the day. Calls during business hours go unanswered. After hours, voicemail. Most callers never call back — that's real business walking away every day.",
+    build:
+      "VAPI handles the conversation using Claude Sonnet 4.6 as the voice brain. n8n receives every tool call via webhook and routes it by type — checkAvailability, bookAppointment, or checkServiceArea. When a caller asks for availability, n8n pulls live Google Calendar events for the next 10 days, filters out busy slots and weekends, and returns the next three open times directly into the conversation. When the caller picks a time, n8n parses the spoken time, creates a GHL contact, books a Google Calendar event, and creates a GHL appointment simultaneously — all while the caller is still on the line. On success, a Slack alert fires, a Gmail confirmation goes to the caller, and an SMS confirmation is sent via Twilio. If the booking fails at any stage, the voice agent gives a graceful response and a Slack alert fires for manual follow-up. Service area is validated by ZIP code before any booking — out-of-area callers are declined politely and tagged in GHL. If the caller asks to speak to a human, the call transfers live and an urgent Slack alert fires. After every call ends, GPT-4o-mini summarizes the transcript and extracts lead quality, sentiment, and whether follow-up is needed — written as a note directly on the GHL contact and logged to Google Sheets.",
+    theCatch:
+      'The hardest part wasn\'t the booking — it was making the voice agent feel real, not robotic. The system had to parse natural spoken time ("Monday morning", "Friday around 11") into exact ISO timestamps for the calendar API. A single mismatch meant a failed booking with no error the caller could see. The solution was a regex-based time parser in n8n with a graceful fallback voice response asking the caller to repeat the time — keeping the conversation natural even when the parse fails.',
+    outcome:
+      "A caller phones in, speaks naturally, gets real availability, books a real appointment, and receives a confirmation — all before the call ends. The owner gets a Slack alert. The CRM is updated. The call is logged and summarized by AI. Built and tested solo as a portfolio project using a fictional demo client (Summit Roofing).",
+    // A solo build with no production traffic, so no metrics rather than
+    // placeholder ones.
+    metrics: [],
+    stack: [
+      logo("VAPI", "vapi"),
+      logo("n8n", "n8n"),
+      logo("Claude (Anthropic)", "anthropic"),
+      logo("OpenAI", "openai"),
+      logo("GoHighLevel", "gohighlevel"),
+      logo("Google Calendar", "googlecalendar"),
+      logo("Google Sheets", "googlesheets"),
+      logo("Gmail", "gmail"),
+      logo("Twilio", "twilio"),
+      logo("Slack", "slack"),
+    ],
   },
   {
     id: "cs-rag",
