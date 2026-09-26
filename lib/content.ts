@@ -221,133 +221,6 @@ export type CaseStudy = {
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: "cs-workflow",
-    category: "workflow",
-    tone: "ember",
-    categoryLabel: "Workflow Automation",
-    title: "AI Lead Triage & Response System",
-    stat: {
-      logo: { src: "/logos/make.svg", alt: "Make.com" },
-      // Stored lower case; the .label rule sets it in caps.
-      label: "personalized reply · live booking · zero manual sorting",
-    },
-    summary:
-      "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",
-    video: {
-      id: "pRJ-z4PyHvw",
-      title: "Walkthrough: AI Lead Triage & Response System",
-    },
-    shots: [
-      {
-        src: "/images/projects/project-1/canvas-full.png",
-        alt: "The full Make.com scenario: a linear intake chain of webhook, scoring and formatting steps feeding a router that fans out into three lead tiers.",
-        w: 1282,
-        h: 585,
-        caption: "Make.com canvas — full workflow overview",
-      },
-      {
-        src: "/images/projects/project-1/router-hot-branch.png",
-        alt: "The router's three branches in detail, the hot-lead path running Airtable, Slack and Gmail steps with timed delays between follow-ups.",
-        w: 1269,
-        h: 574,
-        caption: "Router branching: HOT, WARM, and COLD lead paths",
-      },
-    ],
-    problem:
-      "Leads that fill out a form typically wait hours — sometimes a full day — before anyone follows up. In that gap, they often go cold or move on to a competitor.",
-    build:
-      "Make.com orchestrates the flow via a router that splits leads into three tiers — hot, warm, or cold — each handled differently. A webhook catches the form submission, then two GPT-4o-mini calls score the lead and generate personalized talking points. Hot leads trigger a live Cal.com API call pulling the next open slot directly into the reply email. All tiers log to Airtable, ping Slack, and send a personalized Gmail reply. Warm and cold leads enter a follow-up sequence with timed delays. If no response, the system follows up automatically. Low-confidence scores flag the lead for human review instead of guessing.",
-    theCatch:
-      "Midway through, I had to decide: should the Cal.com integration auto-book the call, or just show the lead a live open time to click? Auto-booking needed a second API call (POST /bookings) plus confirmation/cancellation handling — a much bigger build. I scoped it down to read-only availability (GET /slots) instead: the lead gets a real, live time with one click to confirm, but the system doesn't commit anything on their behalf without them acting. Smaller and more honest than claiming full auto-booking.",
-    outcome:
-      "From form submission to a scored, logged, and replied-to lead — no one touches it. Hot leads get a real booking slot in their inbox. Warm and cold leads enter an automatic follow-up sequence. Built and tested solo as a portfolio project.",
-    // No production data to report, so no metrics rather than placeholder ones.
-    metrics: [],
-    stack: [
-      logo("Make.com", "make"),
-      logo("OpenAI", "openai"),
-      logo("Airtable", "airtable"),
-      logo("Slack", "slack"),
-      logo("Cal.com", "caldotcom"),
-      logo("Gmail", "gmail"),
-    ],
-  },
-  {
-    id: "cs-leads",
-    category: "leads",
-    tone: "lime",
-    categoryLabel: "CRM & Pipeline Automation",
-    title: "GHL Agency System",
-    stat: {
-      logo: { src: "/logos/gohighlevel.svg", alt: "GoHighLevel" },
-      label: "qualified · booked · nurtured · auto",
-    },
-    summary:
-      "An AI system that qualifies every inbound lead, books hot prospects straight onto the calendar, and nurtures the rest — automatically, end to end.",
-    video: {
-      id: "1x9ELW9R8bE",
-      title: "Walkthrough: GHL Agency System",
-    },
-    shots: [
-      {
-        src: "/images/projects/project-2/canvas-full.png",
-        alt: "The whole n8n canvas, with every route colour-coded as its own lane: qualification, the hot path, the warm nurture, the cold re-engagement, the no-show and completed handlers, and error handling.",
-        w: 1320,
-        h: 529,
-        caption: "n8n workflow — full system overview across all lead tiers",
-      },
-      {
-        src: "/images/projects/project-2/hot-path.png",
-        alt: "The hot lane step by step — instant SMS, personalized email, a live free-slot lookup, the booking, the move to the Booked stage, then the confirmation email and 24-hour and 1-hour reminders — with the warm and cold lanes beneath it.",
-        w: 1323,
-        h: 527,
-        caption:
-          "HOT path: instant SMS, calendar lookup, auto-booking, reminders",
-      },
-      {
-        src: "/images/projects/project-2/handlers.png",
-        alt: "The no-show handler moving an opportunity to No-Show and sending a rebooking email, the completed handler waiting two hours before its review request, and the error handler alerting Slack with a Gmail fallback.",
-        w: 1326,
-        h: 530,
-        caption: "No-show, completed, error, and review handlers",
-      },
-      {
-        src: "/images/projects/project-2/ghl-pipeline.png",
-        alt: "The GoHighLevel opportunities board, its stages running New Lead, Hot, Warm, Cold, Booked, Confirmed, Completed, No-Show and Re-engaged, with a lead sitting in Booked.",
-        w: 1952,
-        h: 468,
-        caption: "GHL pipeline — 9 stages from New Lead to Re-engaged",
-      },
-      {
-        src: "/images/projects/project-2/ghl-contact.png",
-        alt: "The contact record the run produced in GoHighLevel, tagged hot-lead and appointment-booked, its activity showing the opportunity and the Strategy Session appointment created from the form submission.",
-        w: 1164,
-        h: 565,
-        caption:
-          "GHL contact record — tags, appointment, and source logged automatically",
-      },
-    ],
-    problem:
-      "Most agencies lose leads because follow-up is manual and slow. A hot lead that waits an hour is already cold. This system was built to close that gap — every lead qualified, routed, and handled in under 60 seconds, with no one lifting a finger.",
-    build:
-      "n8n orchestrates the full flow. A GHL webhook fires the moment a form is submitted — GPT-4o-mini reads the lead and scores it HOT, WARM, or COLD, the way a salesperson would in the first 10 seconds of a call. The contact and opportunity are created in GHL instantly, dropped into the correct pipeline stage. Hot leads get an instant SMS, a personalized email reply, a real-time calendar slot lookup, and an auto-booked Strategy Session — confirmation email and 24h + 1h reminders included. Warm leads enter a 5-day nurture sequence: Day 1 intro, Day 3 value email, Day 5 SMS follow-up. Cold leads are logged and re-engaged at Day 14. A duplicate lead check prevents double-booking. No-shows trigger a rebooking email and move the opportunity to the No-Show stage. Showed leads move to Completed, wait 2 hours, then receive an automatic review request. Every path alerts Slack. Any node failure fires an error handler — Slack alert plus Gmail fallback — so nothing fails silently.",
-    theCatch:
-      "The video script says \"SMS-ready as it scales\" — that's only half true. Twilio's trial account blocks SMS to Philippine numbers. Every SMS node is set to continueRegularOutput so the workflow doesn't break, but SMS delivery to non-US numbers won't work without upgrading. Scoped as a known production limitation, not a bug — and documented honestly here rather than hidden. A review handler is also built and wired — but GHL's native review webhook is a paid add-on, so it's documented as a stub rather than a connected path.",
-    outcome:
-      "A full agency intake system — lead in, qualified, booked, nurtured, and followed up with automatically. No CRM left untouched, no lead unhandled. Built and tested solo as a portfolio project.",
-    // A solo build with no production traffic, so no metrics rather than
-    // placeholder ones.
-    metrics: [],
-    stack: [
-      logo("n8n", "n8n"),
-      logo("OpenAI", "openai"),
-      logo("GoHighLevel", "gohighlevel"),
-      logo("Twilio", "twilio"),
-      logo("Gmail", "gmail"),
-      logo("Slack", "slack"),
-    ],
-  },
-  {
     id: "cs-voice",
     category: "voice",
     tone: "rose",
@@ -435,6 +308,81 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
   },
   {
+    id: "cs-leads",
+    category: "leads",
+    tone: "lime",
+    categoryLabel: "CRM & Pipeline Automation",
+    title: "GHL Agency System",
+    stat: {
+      logo: { src: "/logos/gohighlevel.svg", alt: "GoHighLevel" },
+      label: "qualified · booked · nurtured · auto",
+    },
+    summary:
+      "An AI system that qualifies every inbound lead, books hot prospects straight onto the calendar, and nurtures the rest — automatically, end to end.",
+    video: {
+      id: "1x9ELW9R8bE",
+      title: "Walkthrough: GHL Agency System",
+    },
+    shots: [
+      {
+        src: "/images/projects/project-2/canvas-full.png",
+        alt: "The whole n8n canvas, with every route colour-coded as its own lane: qualification, the hot path, the warm nurture, the cold re-engagement, the no-show and completed handlers, and error handling.",
+        w: 1320,
+        h: 529,
+        caption: "n8n workflow — full system overview across all lead tiers",
+      },
+      {
+        src: "/images/projects/project-2/hot-path.png",
+        alt: "The hot lane step by step — instant SMS, personalized email, a live free-slot lookup, the booking, the move to the Booked stage, then the confirmation email and 24-hour and 1-hour reminders — with the warm and cold lanes beneath it.",
+        w: 1323,
+        h: 527,
+        caption:
+          "HOT path: instant SMS, calendar lookup, auto-booking, reminders",
+      },
+      {
+        src: "/images/projects/project-2/handlers.png",
+        alt: "The no-show handler moving an opportunity to No-Show and sending a rebooking email, the completed handler waiting two hours before its review request, and the error handler alerting Slack with a Gmail fallback.",
+        w: 1326,
+        h: 530,
+        caption: "No-show, completed, error, and review handlers",
+      },
+      {
+        src: "/images/projects/project-2/ghl-pipeline.png",
+        alt: "The GoHighLevel opportunities board, its stages running New Lead, Hot, Warm, Cold, Booked, Confirmed, Completed, No-Show and Re-engaged, with a lead sitting in Booked.",
+        w: 1952,
+        h: 468,
+        caption: "GHL pipeline — 9 stages from New Lead to Re-engaged",
+      },
+      {
+        src: "/images/projects/project-2/ghl-contact.png",
+        alt: "The contact record the run produced in GoHighLevel, tagged hot-lead and appointment-booked, its activity showing the opportunity and the Strategy Session appointment created from the form submission.",
+        w: 1164,
+        h: 565,
+        caption:
+          "GHL contact record — tags, appointment, and source logged automatically",
+      },
+    ],
+    problem:
+      "Most agencies lose leads because follow-up is manual and slow. A hot lead that waits an hour is already cold. This system was built to close that gap — every lead qualified, routed, and handled in under 60 seconds, with no one lifting a finger.",
+    build:
+      "n8n orchestrates the full flow. A GHL webhook fires the moment a form is submitted — GPT-4o-mini reads the lead and scores it HOT, WARM, or COLD, the way a salesperson would in the first 10 seconds of a call. The contact and opportunity are created in GHL instantly, dropped into the correct pipeline stage. Hot leads get an instant SMS, a personalized email reply, a real-time calendar slot lookup, and an auto-booked Strategy Session — confirmation email and 24h + 1h reminders included. Warm leads enter a 5-day nurture sequence: Day 1 intro, Day 3 value email, Day 5 SMS follow-up. Cold leads are logged and re-engaged at Day 14. A duplicate lead check prevents double-booking. No-shows trigger a rebooking email and move the opportunity to the No-Show stage. Showed leads move to Completed, wait 2 hours, then receive an automatic review request. Every path alerts Slack. Any node failure fires an error handler — Slack alert plus Gmail fallback — so nothing fails silently.",
+    theCatch:
+      "The video script says \"SMS-ready as it scales\" — that's only half true. Twilio's trial account blocks SMS to Philippine numbers. Every SMS node is set to continueRegularOutput so the workflow doesn't break, but SMS delivery to non-US numbers won't work without upgrading. Scoped as a known production limitation, not a bug — and documented honestly here rather than hidden. A review handler is also built and wired — but GHL's native review webhook is a paid add-on, so it's documented as a stub rather than a connected path.",
+    outcome:
+      "A full agency intake system — lead in, qualified, booked, nurtured, and followed up with automatically. No CRM left untouched, no lead unhandled. Built and tested solo as a portfolio project.",
+    // A solo build with no production traffic, so no metrics rather than
+    // placeholder ones.
+    metrics: [],
+    stack: [
+      logo("n8n", "n8n"),
+      logo("OpenAI", "openai"),
+      logo("GoHighLevel", "gohighlevel"),
+      logo("Twilio", "twilio"),
+      logo("Gmail", "gmail"),
+      logo("Slack", "slack"),
+    ],
+  },
+  {
     id: "cs-rag",
     category: "rag",
     tone: "ice",
@@ -494,6 +442,58 @@ export const CASE_STUDIES: CaseStudy[] = [
       logo("Telegram", "telegram"),
       logo("Google Sheets", "googlesheets"),
       logo("Slack", "slack"),
+    ],
+  },
+  {
+    id: "cs-workflow",
+    category: "workflow",
+    tone: "ember",
+    categoryLabel: "Workflow Automation",
+    title: "AI Lead Triage & Response System",
+    stat: {
+      logo: { src: "/logos/make.svg", alt: "Make.com" },
+      // Stored lower case; the .label rule sets it in caps.
+      label: "personalized reply · live booking · zero manual sorting",
+    },
+    summary:
+      "An AI system that scores, logs, and replies to new leads — in seconds, not hours.",
+    video: {
+      id: "pRJ-z4PyHvw",
+      title: "Walkthrough: AI Lead Triage & Response System",
+    },
+    shots: [
+      {
+        src: "/images/projects/project-1/canvas-full.png",
+        alt: "The full Make.com scenario: a linear intake chain of webhook, scoring and formatting steps feeding a router that fans out into three lead tiers.",
+        w: 1282,
+        h: 585,
+        caption: "Make.com canvas — full workflow overview",
+      },
+      {
+        src: "/images/projects/project-1/router-hot-branch.png",
+        alt: "The router's three branches in detail, the hot-lead path running Airtable, Slack and Gmail steps with timed delays between follow-ups.",
+        w: 1269,
+        h: 574,
+        caption: "Router branching: HOT, WARM, and COLD lead paths",
+      },
+    ],
+    problem:
+      "Leads that fill out a form typically wait hours — sometimes a full day — before anyone follows up. In that gap, they often go cold or move on to a competitor.",
+    build:
+      "Make.com orchestrates the flow via a router that splits leads into three tiers — hot, warm, or cold — each handled differently. A webhook catches the form submission, then two GPT-4o-mini calls score the lead and generate personalized talking points. Hot leads trigger a live Cal.com API call pulling the next open slot directly into the reply email. All tiers log to Airtable, ping Slack, and send a personalized Gmail reply. Warm and cold leads enter a follow-up sequence with timed delays. If no response, the system follows up automatically. Low-confidence scores flag the lead for human review instead of guessing.",
+    theCatch:
+      "Midway through, I had to decide: should the Cal.com integration auto-book the call, or just show the lead a live open time to click? Auto-booking needed a second API call (POST /bookings) plus confirmation/cancellation handling — a much bigger build. I scoped it down to read-only availability (GET /slots) instead: the lead gets a real, live time with one click to confirm, but the system doesn't commit anything on their behalf without them acting. Smaller and more honest than claiming full auto-booking.",
+    outcome:
+      "From form submission to a scored, logged, and replied-to lead — no one touches it. Hot leads get a real booking slot in their inbox. Warm and cold leads enter an automatic follow-up sequence. Built and tested solo as a portfolio project.",
+    // No production data to report, so no metrics rather than placeholder ones.
+    metrics: [],
+    stack: [
+      logo("Make.com", "make"),
+      logo("OpenAI", "openai"),
+      logo("Airtable", "airtable"),
+      logo("Slack", "slack"),
+      logo("Cal.com", "caldotcom"),
+      logo("Gmail", "gmail"),
     ],
   },
 ];
