@@ -348,7 +348,7 @@ function Shots({ shots }: { shots: Shot[] }) {
               onClick={() => setOpenIndex(null)}
               // 95% ink still leaves the page faintly legible behind it, which
               // reads as a glitch rather than a backdrop; the blur settles it.
-              className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 p-4 backdrop-blur-md sm:p-8"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 backdrop-blur-md"
             >
               <button
                 ref={closeRef}
@@ -361,14 +361,24 @@ function Shots({ shots }: { shots: Shot[] }) {
 
               {/* Clicks on the image itself must not reach the backdrop, or
                   the overlay would close the moment it was aimed at. */}
+              {/* Largest size that fits inside 90vw x 90vh with the ratio
+                  intact. Width is the single controlling value: 90vh scaled
+                  by the aspect ratio is what the image would be if height
+                  were the binding limit, so whichever of the two is smaller
+                  is the correct width, and height follows. Unlike a bare
+                  max-width this also scales *up*, so a screenshot narrower
+                  than the viewport no longer sits small on a big display. */}
               <Image
                 src={shot.src}
                 alt={shot.alt}
                 width={shot.w}
                 height={shot.h}
-                sizes="92vw"
+                sizes="90vw"
                 onClick={(e) => e.stopPropagation()}
-                className="h-auto max-h-[88vh] w-auto max-w-[92vw] border border-line"
+                style={{
+                  width: `min(90vw, ${((shot.w / shot.h) * 90).toFixed(3)}vh)`,
+                }}
+                className="h-auto max-w-none border border-line"
               />
             </div>,
             document.body,
