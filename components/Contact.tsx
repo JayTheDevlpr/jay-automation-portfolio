@@ -2,7 +2,7 @@ import { CONTACT, SITE } from "@/lib/content";
 
 export default function Contact() {
   return (
-    <section id="contact" className="bg-bog text-bone">
+    <section id="contact" className="bg-moss text-bone">
       <div className="mx-auto max-w-[88rem] px-5 py-16 sm:px-8 sm:py-24">
         <div className="label flex justify-between border-t border-line pt-4 text-mute">
           <span>05 / Contact</span>
