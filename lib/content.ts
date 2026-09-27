@@ -6,7 +6,7 @@ export type ServiceId = "workflow" | "leads" | "voice" | "rag";
 export const SITE = {
   name: "Jay Marin",
   role: "AI Automation Specialist",
-  email: "hello@example.com",
+  email: "jehmmarin@gmail.com",
 };
 
 export const NAV = [
@@ -502,8 +502,10 @@ export const CONTACT = {
   headline: "Got a process that eats your week?",
   sub: "Placeholder line inviting people to get in touch, and what to include in a first message.",
   links: [
-    { label: "Book a call", href: "#" },
-    { label: "LinkedIn", href: "#" },
-    { label: "GitHub", href: "https://github.com/JayTheDevlpr" },
+    { label: "Book a Call", href: "https://cal.com/mrn.jay/discovery-call" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/jay-marin-29ba13376",
+    },
   ],
 };
