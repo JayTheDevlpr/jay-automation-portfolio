@@ -22,7 +22,7 @@ export default function ToolsStack() {
           index="03"
           label="Stack"
           title="What the systems run on."
-          note={`${TOOL_COUNT} tools, actually used.`}
+          note={`${TOOL_COUNT} tools.`}
         />
 
         <ol className="border-t border-line">

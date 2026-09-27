@@ -54,7 +54,7 @@ export const ABOUT = {
   // CSS, so screen readers get a name rather than spelling out an acronym.
   idName: "Jay Marin",
   paragraph:
-    "A workflow builder at heart — I take what a business already runs on manually and turn it into something automated, reliable, and built to keep running long after I've moved on to the next system.",
+    "I find what's slowing a business down, build the system that fixes it, and hand it over already running — no manual required.",
   cta: { label: "See my case studies", href: "#work" },
 };
 
@@ -500,7 +500,7 @@ export const CASE_STUDIES: CaseStudy[] = [
 
 export const CONTACT = {
   headline: "Got a process that eats your week?",
-  sub: "If a process is eating your time, let's automate it. Reach out directly or book a call — I'll come prepared.",
+  sub: "If a process is eating your time, let's automate it. Reach out or book a call.",
   links: [
     { label: "Book a Call", href: "https://cal.com/mrn.jay/discovery-call" },
     {
