@@ -22,7 +22,6 @@ export default function CaseStudies() {
           index="04"
           label="Work"
           title="Selected builds, with the numbers."
-          note="Placeholder case studies"
         />
 
         <ul className="space-y-5">

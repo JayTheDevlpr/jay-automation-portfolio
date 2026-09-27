@@ -52,7 +52,7 @@ export const ABOUT = {
   portrait: "/professional-pic.png",
   // Printed on the hanging ID badge. Stored in title case and uppercased in
   // CSS, so screen readers get a name rather than spelling out an acronym.
-  idName: "Jay M Marin",
+  idName: "Jay Marin",
   paragraph:
     "A workflow builder at heart — I take what a business already runs on manually and turn it into something automated, reliable, and built to keep running long after I've moved on to the next system.",
   cta: { label: "See my case studies", href: "#work" },
@@ -500,7 +500,7 @@ export const CASE_STUDIES: CaseStudy[] = [
 
 export const CONTACT = {
   headline: "Got a process that eats your week?",
-  sub: "Placeholder line inviting people to get in touch, and what to include in a first message.",
+  sub: "If a process is eating your time, let's automate it. Reach out directly or book a call — I'll come prepared.",
   links: [
     { label: "Book a Call", href: "https://cal.com/mrn.jay/discovery-call" },
     {
