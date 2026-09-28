@@ -312,7 +312,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     category: "leads",
     tone: "lime",
     categoryLabel: "CRM & Pipeline Automation",
-    title: "GHL Agency System",
+    title: "AI Lead Qualification & Booking System",
     stat: {
       logo: { src: "/logos/gohighlevel.svg", alt: "GoHighLevel" },
       label: "qualified · booked · nurtured · auto",
@@ -321,7 +321,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "An AI system that qualifies every inbound lead, books hot prospects straight onto the calendar, and nurtures the rest — automatically, end to end.",
     video: {
       id: "1x9ELW9R8bE",
-      title: "Walkthrough: GHL Agency System",
+      title: "Walkthrough: AI Lead Qualification & Booking System",
     },
     shots: [
       {
