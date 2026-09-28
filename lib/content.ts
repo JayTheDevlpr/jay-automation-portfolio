@@ -69,7 +69,7 @@ export const SERVICES: Service[] = [
   {
     id: "workflow",
     tone: "ember",
-    title: "Workflow Automation",
+    title: "AI Workflow Automation",
     blurb:
       "Building systems that take a manual, repetitive process and turn it into something that runs on its own, reliably, without needing to be watched.",
   },
