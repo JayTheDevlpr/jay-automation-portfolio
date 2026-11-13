@@ -225,16 +225,16 @@ export const CASE_STUDIES: CaseStudy[] = [
     category: "voice",
     tone: "rose",
     categoryLabel: "Voice AI Agents (VAPI)",
-    title: "AI Voice Receptionist",
+    title: "24/7 AI Front Desk",
     stat: {
       logo: { src: "/logos/vapi.svg", alt: "VAPI" },
       label: "instant answer · real booking · zero manual work",
     },
     summary:
-      "An AI voice receptionist that answers every inbound call, qualifies the caller, checks live calendar availability, and books the appointment — automatically, while still on the phone.",
+      "A 24/7 AI front desk that answers every inbound call, qualifies the caller, checks live calendar availability, and books the appointment — automatically, while still on the phone.",
     video: {
       id: "2-vzHshJRkg",
-      title: "Walkthrough: AI Voice Receptionist",
+      title: "Walkthrough: 24/7 AI Front Desk",
     },
     shots: [
       {
